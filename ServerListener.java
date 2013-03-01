@@ -3,7 +3,7 @@ import java.net.*;
 
 
 public class ServerListener extends Thread{
-  Socket s;
+	Socket s;
 	int playerNum;
 	MyConnection conn;
 	Character board[][];
@@ -35,6 +35,7 @@ public class ServerListener extends Thread{
 						token = token + msgIn.charAt(i);
 						i++;
 					}
+					
 					String charName = token;
 					token = "";
 					int rowNum = msgIn.charAt(i+1) - 48;
@@ -48,6 +49,8 @@ public class ServerListener extends Thread{
 					
 					//else get the details
 					board[rowNum][colNum].name = charName;
+					board[rowNum][colNum].owner = playerNum;
+					
 					if(charName.equals("gingerbread")){
 						board[rowNum][colNum].damage = 20;
 						board[rowNum][colNum].life = 100;

@@ -19,6 +19,8 @@ public class MyClient{
 					- check if location specified is empty
 					- check if the player has enough points
 					- check if location specified is valid (sa area niya talaga)
+							--> feeling ko di na kailangan tong location kasi
+							 	pde naman idisable yung board nung opponent :D
 				*/
 				
 				conn.sendMessage(msgOut);

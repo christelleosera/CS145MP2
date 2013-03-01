@@ -12,7 +12,7 @@ public class MyServer {
 	//initialize the board
 	for(i=0; i<=3; i++){
 		for(j=1; j<=10; j++){
-			board[i][j] = new Character(null, -1, -1, -1, -1, -1);
+			board[i][j] = new Character();
 		}
 	}
 	

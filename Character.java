@@ -2,20 +2,32 @@ import java.io.*;
 import java.net.*;
 
 public class Character{
-  String name;
+	String name;
 	int damage;
 	int life;
 	int cost;
 	int rowNum;
 	int colNum;
+	int owner;
 	
-	public Character(String name, int damage, int life, int cost, int rowNum, int colNum){
+	public Character(){
+		this.name = null;
+		this.damage = -1;
+		this.life = -1;
+		this.cost = -1;
+		this.rowNum = -1;
+		this.colNum = -1;
+		this.owner = -1;
+	}
+	
+	public Character(String name, int damage, int life, int cost, int rowNum, int colNum, int player){
 		this.name = name;
 		this.damage = damage;
 		this.life = life;
 		this.cost = cost;
 		this.rowNum = rowNum;
 		this.colNum = colNum;
+		this.owner = player; 
 	}
 	
 	public void attack(Character board[][]){
@@ -23,7 +35,12 @@ public class Character{
 		new AttackThread(board, this.rowNum, this.colNum);
 	}
 
-
+	public boolean isOccupied(){
+		if(this.owner == -1)
+			return false;
+		else
+			return true;
+	}
 
 
 

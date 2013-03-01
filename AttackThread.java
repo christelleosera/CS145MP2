@@ -2,8 +2,12 @@ import java.io.*;
 import java.net.*;
 
 
+
 public class AttackThread extends Thread{
-  Character board[][];
+	/*players*/
+	private static final int PLAYER1 = 0;
+	
+	Character board[][];
 	int rowNum;
 	int colNum;
 	
@@ -15,25 +19,25 @@ public class AttackThread extends Thread{
 	}
 	
 	public void run(){
-		int oppRowNum, oppColNum; //location of opponent
+		int oppColNum=-1; //location of opponent
+		int i=0;
 		
 		if(board[rowNum][colNum].name.equals("donut")){
 			//damage on all rows
+			for(i=0; i<4; i++){
+				 oppColNum = findNearestOpponent(i);
+				 if(oppColNum != -1){ // if an opponent exists
+					damageOpponent(rowNum, oppColNum);
+				}
+			}
 			//may checker din if deads na yung opponents
 		}
 		
 		else{
 			//INSERT CODE FOR FIND NEAREST OPPONENT HERE - should return the location of nearest opponent
-			//change the values of oppRowNum & oppColNum
-			
-			board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
-			//^ life of opponent = old life - damage of this character;
-		
-			if(board[oppRowNum][oppColNum].life <= 0){ // if deads na
-				board[oppRowNum][oppColNum].name = null;
-				board[oppRowNum][oppColNum].damage = -1;
-				board[oppRowNum][oppColNum].life = -1;
-				board[oppRowNum][oppColNum].cost = -1;
+			oppColNum = findNearestOpponent(rowNum);
+			if(oppColNum != -1){ // if an opponent exists
+				damageOpponent(rowNum, oppColNum);		
 			}
 		}
 		
@@ -42,4 +46,39 @@ public class AttackThread extends Thread{
 
 	}
 	
+	//returns column number of nearest opponent
+	private int findNearestOpponent(int rowNum){
+		int i=0;
+		if(board[rowNum][colNum].owner == PLAYER1){
+			for(i=6; i<12; i++){
+				if(board[rowNum][i].isOccupied() == true){
+					return i;
+				}
+			}
+		}
+		else{
+			for(i=5; i>=0; i--){
+				if(board[rowNum][i].isOccupied() == true){
+					return i;
+				}
+			}	
+		}
+		
+		//if no opponent is found, return -1
+		return -1;
+	}
+	
+	private void damageOpponent(int oppRowNum, int oppColNum){
+		
+		//change the values of oppRowNum & oppColNum
+		board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
+		//^ life of opponent = old life - damage of this character;
+	
+		if(board[oppRowNum][oppColNum].life <= 0){ // if deads na
+			board[oppRowNum][oppColNum].name = null;
+			board[oppRowNum][oppColNum].damage = -1;
+			board[oppRowNum][oppColNum].life = -1;
+			board[oppRowNum][oppColNum].cost = -1;
+		}
+	}
 }
