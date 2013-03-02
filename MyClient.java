@@ -22,10 +22,10 @@ public class MyServer {
 	board[2][0] = new Character("cupcake", 0, 300, 0, 2, 0, 0);
 	board[3][0] = new Character("cupcake", 0, 300, 0, 3, 0, 0);
 	
-	board[0][11] = new Character("cupcake", 0, 300, 0, 0, 11, 0);
-	board[1][11] = new Character("cupcake", 0, 300, 0, 1, 11, 0);
-	board[2][11] = new Character("cupcake", 0, 300, 0, 2, 11, 0);
-	board[3][11] = new Character("cupcake", 0, 300, 0, 3, 11, 0);
+	board[0][11] = new Character("cupcake", 0, 300, 0, 0, 11, 1);
+	board[1][11] = new Character("cupcake", 0, 300, 0, 1, 11, 1);
+	board[2][11] = new Character("cupcake", 0, 300, 0, 2, 11, 1);
+	board[3][11] = new Character("cupcake", 0, 300, 0, 3, 11, 1);
 	
 			
 		try {
