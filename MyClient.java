@@ -1,49 +1,36 @@
 import java.io.*;
 import java.net.*;
 
-
-public class MyServer {
+public class MyClient{
   public static void main(String args[]) {
-	int playerNum = 1;	
-	int i, j;
-	MyConnection connArray[] = new MyConnection[2];	
-	Character board[][] = new Character[4][12];
-	
-	//initialize the board
-	for(i=0; i<=3; i++){
-		for(j=1; j<=10; j++){
-			board[i][j] = new Character();
-		}
-	}
-	
-	//cupcakes
-	board[0][0] = new Character("cupcake", 0, 300, 0, 0, 0, 0);
-	board[1][0] = new Character("cupcake", 0, 300, 0, 1, 0, 0);
-	board[2][0] = new Character("cupcake", 0, 300, 0, 2, 0, 0);
-	board[3][0] = new Character("cupcake", 0, 300, 0, 3, 0, 0);
-	
-	board[0][11] = new Character("cupcake", 0, 300, 0, 0, 11, 1);
-	board[1][11] = new Character("cupcake", 0, 300, 0, 1, 11, 1);
-	board[2][11] = new Character("cupcake", 0, 300, 0, 2, 11, 1);
-	board[3][11] = new Character("cupcake", 0, 300, 0, 3, 11, 1);
-	
-			
-		try {
-			System.out.println("Server: Starting...");
-			ServerSocket ssocket = new ServerSocket(8888);
+		int points = 250, i;
+		try{
+			Socket s = new Socket("127.0.0.1", 8888);
+			System.out.println("Client connected!");
+			MyConnection conn = new MyConnection(s);
 
-			System.out.println("Server: Waiting for connections...");
-			
-			while(playerNum <= 2){
-				Socket socket = ssocket.accept(); // waiting
-				System.out.print("Server: somebody connected!");
-				System.out.println(socket.getInetAddress());
-				//start thread
-				new ServerListener(socket, playerNum, connArray[playerNum], board);
-				playerNum++;
+			while(points > 0){
+				System.out.print("Enter message: ");
+				InputStreamReader reader = new InputStreamReader(System.in);
+				BufferedReader read = new BufferedReader(reader);
+				String msgOut = read.readLine();
+				
+				/*CHECKING TO BE DONE BEFORE SENDING (sa GUI pala to ichecheck since yung command na text doon manggagaling):
+					- check if location specified is empty
+					- check if the player has enough points
+				*/
+				
+				conn.sendMessage(msgOut);
+				
+				String msgIn = conn.getMessage();
+				
+				if(msgIn.charAt(0) == '$'){
+					points = points - Integer.parseInt(msgIn.substring(1));
+					System.out.println("POINTS: " + points);
+				}
 			}
-
-		} catch (Exception e){ e.printStackTrace(); }
+		} catch (Exception e){}
+		
 	}
 }
 
