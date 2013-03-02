@@ -1,39 +1,49 @@
 import java.io.*;
 import java.net.*;
 
-public class MyClient{
-  public static void main(String args[]) {
-		int points = 250, i;
-		try{
-			Socket s = new Socket("127.0.0.1", 8888);
-			System.out.println("Client connected!");
-			MyConnection conn = new MyConnection(s);
 
-			while(points > 0){
-				System.out.print("Enter message: ");
-				InputStreamReader reader = new InputStreamReader(System.in);
-				BufferedReader read = new BufferedReader(reader);
-				String msgOut = read.readLine();
-				
-				/*CHECKING TO BE DONE BEFORE SENDING:
-					- check if location specified is empty
-					- check if the player has enough points
-					- check if location specified is valid (sa area niya talaga)
-							--> feeling ko di na kailangan tong location kasi
-							 	pde naman idisable yung board nung opponent :D
-				*/
-				
-				conn.sendMessage(msgOut);
-				
-				String msgIn = conn.getMessage();
-				
-				if(msgIn.charAt(0) == '$'){
-					points = points - Integer.parseInt(msgIn.substring(1));
-					System.out.println("POINTS: " + points);
-				}
+public class MyServer {
+  public static void main(String args[]) {
+	int playerNum = 1;	
+	int i, j;
+	MyConnection connArray[] = new MyConnection[2];	
+	Character board[][] = new Character[4][12];
+	
+	//initialize the board
+	for(i=0; i<=3; i++){
+		for(j=1; j<=10; j++){
+			board[i][j] = new Character();
+		}
+	}
+	
+	//cupcakes
+	board[0][0] = new Character("cupcake", 0, 300, 0, 0, 0, 0);
+	board[1][0] = new Character("cupcake", 0, 300, 0, 1, 0, 0);
+	board[2][0] = new Character("cupcake", 0, 300, 0, 2, 0, 0);
+	board[3][0] = new Character("cupcake", 0, 300, 0, 3, 0, 0);
+	
+	board[0][11] = new Character("cupcake", 0, 300, 0, 0, 11, 0);
+	board[1][11] = new Character("cupcake", 0, 300, 0, 1, 11, 0);
+	board[2][11] = new Character("cupcake", 0, 300, 0, 2, 11, 0);
+	board[3][11] = new Character("cupcake", 0, 300, 0, 3, 11, 0);
+	
+			
+		try {
+			System.out.println("Server: Starting...");
+			ServerSocket ssocket = new ServerSocket(8888);
+
+			System.out.println("Server: Waiting for connections...");
+			
+			while(playerNum <= 2){
+				Socket socket = ssocket.accept(); // waiting
+				System.out.print("Server: somebody connected!");
+				System.out.println(socket.getInetAddress());
+				//start thread
+				new ServerListener(socket, playerNum, connArray[playerNum], board);
+				playerNum++;
 			}
-		} catch (Exception e){}
-		
+
+		} catch (Exception e){ e.printStackTrace(); }
 	}
 }
 
