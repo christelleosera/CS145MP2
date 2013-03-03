@@ -11,13 +11,7 @@ public class Character{
 	int owner;
 	
 	public Character(){
-		this.name = null;
-		this.damage = -1;
-		this.life = -1;
-		this.cost = -1;
-		this.rowNum = -1;
-		this.colNum = -1;
-		this.owner = -1;
+		this.reset();
 	}
 	
 	public Character(String name, int damage, int life, int cost, int rowNum, int colNum, int player){
@@ -33,6 +27,7 @@ public class Character{
 	public void attack(Character board[][]){
 		//eto nalang ipa-pass since given the rownum and colnum, pwede natin maaccess yung character na nasa position na yun, thus pwede natin malaman yung damage niya
 		new AttackThread(board, this.rowNum, this.colNum);
+		
 	}
 
 	public boolean isOccupied(){
@@ -41,8 +36,15 @@ public class Character{
 		else
 			return true;
 	}
-
-
-
+	
+	public void reset(){
+		this.name = null;
+		this.damage = -1;
+		this.life = -1;
+		this.cost = -1;
+		this.rowNum = -1;
+		this.colNum = -1;
+		this.owner = -1;
+	}
 
 }
