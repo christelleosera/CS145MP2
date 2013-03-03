@@ -21,26 +21,43 @@ public class AttackThread extends Thread{
 	public void run(){
 		int oppColNum=-1; //location of opponent
 		int i=0;
+		int opponentCount=0;
 		
-		if(board[rowNum][colNum].name.equals("donut")){
-			//damage on all rows
-			for(i=0; i<4; i++){
-				 oppColNum = findNearestOpponent(i);
-				 if(oppColNum != -1){ // if an opponent exists
-					damageOpponent(rowNum, oppColNum);
+		while(true){
+			
+			
+			synchronized(board[rowNum][colNum]){
+				if(!iStillExists(board)) break;
+				
+				if(board[rowNum][colNum].name.equals("donut")){
+					//damage on all rows
+					for(i=0; i<4; i++){
+						 oppColNum = findNearestOpponent(i);
+						 if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
+							damageOpponent(rowNum, oppColNum);
+							opponentCount++;
+						}
+					}
+					if(opponentCount == 0)
+						break;
+					opponentCount = 0;
+					
+					//may checker din if deads na yung opponents
+				}
+				
+				else{
+					//INSERT CODE FOR FIND NEAREST OPPONENT HERE - should return the location of nearest opponent
+					oppColNum = findNearestOpponent(rowNum);
+					if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
+						damageOpponent(rowNum, oppColNum);		
+					} else{
+						//System.out.println("WALA NA AKONG KALABAN! O__O break naa! ");
+						break;
+					}
 				}
 			}
-			//may checker din if deads na yung opponents
 		}
-		
-		else{
-			//INSERT CODE FOR FIND NEAREST OPPONENT HERE - should return the location of nearest opponent
-			oppColNum = findNearestOpponent(rowNum);
-			if(oppColNum != -1){ // if an opponent exists
-				damageOpponent(rowNum, oppColNum);		
-			}
-		}
-		
+		//System.out.println("ako si " + board[rowNum][colNum].name + " at dedz na ko.");
 		//code to display board
 		//code to send board to client
 
@@ -69,16 +86,25 @@ public class AttackThread extends Thread{
 	}
 	
 	private void damageOpponent(int oppRowNum, int oppColNum){
-		
-		//change the values of oppRowNum & oppColNum
-		board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
-		//^ life of opponent = old life - damage of this character;
-	
-		if(board[oppRowNum][oppColNum].life <= 0){ // if deads na
-			board[oppRowNum][oppColNum].name = null;
-			board[oppRowNum][oppColNum].damage = -1;
-			board[oppRowNum][oppColNum].life = -1;
-			board[oppRowNum][oppColNum].cost = -1;
+		synchronized(board[rowNum][colNum]){
+			if(iStillExists(board)){
+			//	System.out.println("Location ng kalaban ko: " + oppRowNum + " , " + oppColNum);
+				//change the values of oppRowNum & oppColNum
+				board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
+				//^ life of opponent = old life - damage of this character;
+			//	System.out.println("YES I AM " + board[rowNum][colNum].name + " and I am damaging " + board[oppRowNum][oppColNum].name + " new life: " + board[oppRowNum][oppColNum].life);
+				
+				if(board[oppRowNum][oppColNum].life <= 0){ // if deads na
+					board[oppRowNum][oppColNum].reset();
+				}
+			}
 		}
+	}
+	
+	private boolean iStillExists(Character board[][]){
+		if(board[rowNum][colNum].name == null)
+			return false;
+		else
+			return true;
 	}
 }
