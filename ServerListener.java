@@ -3,17 +3,24 @@ import java.net.*;
 
 
 public class ServerListener extends Thread{
+	/*players*/
+	private static final int PLAYER1 = 0;
+	private static final int PLAYER2 = 1;
+	
 	Socket s;
 	int playerNum;
 	MyConnection conn;
 	Character board[][];
+	Boolean done[];
 	
-	public ServerListener(Socket s, int playerNum, MyConnection conn, Character board[][]){
+	
+	public ServerListener(Socket s, int playerNum, MyConnection conn, Character board[][], Boolean done[]){
 		this.playerNum = playerNum;
 		this.s = s;
 		this.conn = conn;
 		this.board = board;
-		start();
+		this.done = done;
+		//start();
 	}
 	
 	public void run(){
@@ -26,7 +33,7 @@ public class ServerListener extends Thread{
 			while((msgIn = conn.getMessage()) != null && msgIn.equals("DONE") == false){
 				String token ="";
 				int i = 0;
-				
+				System.out.println(msgIn);
 				if(msgIn.substring(0,6).equals("CREATE")){
 				
 					//parsing stuff
@@ -48,56 +55,58 @@ public class ServerListener extends Thread{
 					}*/ //yung checking pala sa client natin ilalagay pati yung pag-check kung enough yung points
 					
 					//else get the details
-					board[rowNum][colNum].name = charName;
-					board[rowNum][colNum].owner = playerNum;
-					
+			
 					if(charName.equals("gingerbread")){
-						board[rowNum][colNum].damage = 20;
-						board[rowNum][colNum].life = 100;
-						board[rowNum][colNum].cost = 25;
+						board[rowNum][colNum] = new Character(charName, 20, 100, 25, rowNum, colNum,  playerNum);	
 					}
 					
 					else if(charName.equals("jellybean")){
-						board[rowNum][colNum].damage = 0;
-						board[rowNum][colNum].life = 200;
-						board[rowNum][colNum].cost = 50;
+						board[rowNum][colNum] = new Character(charName, 0, 200, 50, rowNum, colNum,  playerNum);
 					}
 					
 					else if(charName.equals("gummybear")){
-						board[rowNum][colNum].damage = 10;
-						board[rowNum][colNum].life = 100;
-						board[rowNum][colNum].cost = 15;
+						board[rowNum][colNum] = new Character(charName, 10, 100, 15, rowNum, colNum,  playerNum);
 					}
 					
 					else if(charName.equals("candycane")){
-						board[rowNum][colNum].damage = 0;
-						board[rowNum][colNum].life = 200;
-						board[rowNum][colNum].cost = 50;
+						board[rowNum][colNum] = new Character(charName, 0, 200, 50, rowNum, colNum,  playerNum);
 					}
 					
 					else if(charName.equals("chocnut")){
-						board[rowNum][colNum].damage = 30;
-						board[rowNum][colNum].life = 100;
-						board[rowNum][colNum].cost = 40;
+						board[rowNum][colNum] = new Character(charName, 30, 100, 40, rowNum, colNum,  playerNum);
 					}
 					
 					else if(charName.equals("donut")){
-						board[rowNum][colNum].damage = 10;
-						board[rowNum][colNum].life = 100;
-						board[rowNum][colNum].cost = 100;
+						board[rowNum][colNum] = new Character(charName, 10, 100, 100, rowNum, colNum,  playerNum);
 					}
 					
 					String msgOut = "$" + board[rowNum][colNum].cost;
 					conn.sendMessage(msgOut);
 					
 				}
+				
 			}
+			System.out.println("nag exit ako");
+			done[playerNum] = true;
+			if(done[PLAYER1] && done[PLAYER2])
+					fightStart(board);
 			
 		}catch(Exception e){e.printStackTrace();}	
 		
 	
 	}
-
+	
+	//para sabay sabay magsstart magfire. :D
+	private void fightStart(Character board[][]){
+		System.out.println("fightStart!");
+		int i=0, j=0;
+		for(i=0; i<4; i++){
+			for(j=1; j<11; j++){
+				if(board[i][j].isOccupied())
+					board[i][j].attack(board);
+			}
+		}
+	}
 
 
 }
