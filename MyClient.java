@@ -8,8 +8,9 @@ public class MyClient{
 			Socket s = new Socket("127.0.0.1", 8888);
 			System.out.println("Client connected!");
 			MyConnection conn = new MyConnection(s);
-
-			while(points > 0){
+			MyClientWindow w = new MyClientWindow();
+			w.setVisible(true); 
+		/*	while(points > 0){
 				System.out.print("Enter message: ");
 				InputStreamReader reader = new InputStreamReader(System.in);
 				BufferedReader read = new BufferedReader(reader);
@@ -20,7 +21,7 @@ public class MyClient{
 					- check if the player has enough points
 				*/
 				
-				conn.sendMessage(msgOut);
+		/*		conn.sendMessage(msgOut);
 				
 				String msgIn = conn.getMessage();
 				
@@ -29,6 +30,7 @@ public class MyClient{
 					System.out.println("POINTS: " + points);
 				}
 			}
+		*/
 		} catch (Exception e){}
 		
 	}
