@@ -26,7 +26,8 @@ public class ServerListener extends Thread{
 	public void run(){
 		try{
 			MyConnection conn = new MyConnection(s);
-				
+			//send the client his/her player number
+			conn.sendMessage("" + playerNum + "");	
 			String msgIn = "";
 			//msgIn syntax:	CREATE charactername rowNum colNum
 			

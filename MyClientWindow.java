@@ -7,6 +7,12 @@ import java.net.URL;
 
 
 public class MyClientWindow extends JFrame{
+	
+	/*players*/
+	private static final int PLAYER1 = 0;
+	
+	int player;
+	
 	private JPanel bg = new Background();
 	private Image background, boardP1, boardP2;
 	
@@ -15,14 +21,14 @@ public class MyClientWindow extends JFrame{
 	private ImageIcon candy3_p1 = new ImageIcon("images/donut_p1.png");
 	private ImageIcon candy4_p1 = new ImageIcon("images/gingerbreadman_p1.gif");
 	private ImageIcon candy5_p1 = new ImageIcon("images/gummybear_p1.png");
-	private ImageIcon candy6_p1 = new ImageIcon("images/jellybean_p1.png");
+	private ImageIcon candy6_p1 = new ImageIcon("images/jellybean_p1_face.png");
 	
 	private ImageIcon candy1_p2 = new ImageIcon("images/candycane_p2.png");
 	private ImageIcon candy2_p2 = new ImageIcon("images/chocnut_p2.png");
 	private ImageIcon candy3_p2 = new ImageIcon("images/donut_p2.png");
 	private ImageIcon candy4_p2 = new ImageIcon("images/gingerbreadman_p2.gif");
 	private ImageIcon candy5_p2 = new ImageIcon("images/gummybear_p2.png");
-	private ImageIcon candy6_p2 = new ImageIcon("images/jellybean_p2.png");
+	private ImageIcon candy6_p2 = new ImageIcon("images/jellybean_p2_face.png");
 	
 	/*player 1 items*/
 	JPanel player1 = new Player1();
@@ -35,17 +41,18 @@ public class MyClientWindow extends JFrame{
 	
 	/*player 2 items*/
 	JPanel player2 = new Player2();
-	JButton candycaneP2 = new JButton("candycaneP2");
-	JButton chocnutP2 = new JButton("chocnutP2");
-	JButton donutP2 = new JButton("donutP2");
-	JButton gingerbreadmanP2 = new JButton("chocnutP2");
-	JButton gummybearP2 = new JButton("cupcakeP2");
-	JButton jellybeanP2 = new JButton("cupcakeP2");
+	JButton candycaneP2 = new JButton(candy1_p2);
+	JButton chocnutP2 = new JButton(candy2_p2);
+	JButton donutP2 = new JButton(candy3_p2);
+	JButton gingerbreadmanP2 = new JButton(candy4_p2);
+	JButton gummybearP2 = new JButton(candy5_p2);
+	JButton jellybeanP2 = new JButton(candy6_p2);
 	
 	
 	Container c;
 	
-	public MyClientWindow(){
+	public MyClientWindow(int player){
+		this.player = player;
 		getImages();
 		this.setSize(1105,700);
 		this.setResizable(false);
@@ -64,16 +71,32 @@ public class MyClientWindow extends JFrame{
   
 		/*PLAYER 2*/
 		player2.setBounds(550, 100, 500, 400);
+		candycaneP2.setBounds(250, 550, 100, 100);
+		chocnutP2.setBounds(350, 550, 100, 100);
+		donutP2.setBounds(450, 550, 100, 100);
+		gingerbreadmanP2.setBounds(550, 550, 100, 100);
+		gummybearP2.setBounds(650, 550, 100, 100);
+		jellybeanP2.setBounds(750, 550, 100, 100);
 		
 		c.add(player1);
-		c.add(candycaneP1);
-		c.add(chocnutP1);
-		c.add(donutP1);
-		c.add(gingerbreadmanP1);
-		c.add(gummybearP1);
-		c.add(jellybeanP1);
-		
 		c.add(player2);
+		
+		if(this.player == PLAYER1){
+			c.add(candycaneP1);
+			c.add(chocnutP1);
+			c.add(donutP1);
+			c.add(gingerbreadmanP1);
+			c.add(gummybearP1);
+			c.add(jellybeanP1);
+		} else {
+			c.add(candycaneP2);
+			c.add(chocnutP2);
+			c.add(donutP2);
+			c.add(gingerbreadmanP2);
+			c.add(gummybearP2);
+			c.add(jellybeanP2);	
+		}
+	
 		c.add(bg);
 	}
 
