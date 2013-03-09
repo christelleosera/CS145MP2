@@ -3,17 +3,19 @@ import java.net.*;
 
 public class MyClient{
   public static void main(String args[]) {
-		int points = 250, i, playernum;
+		int points = 250, i, j, playernum;
+		Character board[][] = new Character[4][12];
 		String temp = "";
-		
+				
 		try{
 			Socket s = new Socket("127.0.0.1", 8888);
-			System.out.println("Client connected!");
 			MyConnection conn = new MyConnection(s);
+			System.out.println("Client connected!");
+	
 			temp = conn.getMessage();
-			MyClientWindow w = new MyClientWindow(Integer.parseInt(temp));
+			MyClientWindow w = new MyClientWindow(Integer.parseInt(temp), conn);
 			w.setVisible(true); 
-		/*	while(points > 0){
+	/*		while(points > 0){
 				System.out.print("Enter message: ");
 				InputStreamReader reader = new InputStreamReader(System.in);
 				BufferedReader read = new BufferedReader(reader);
@@ -24,7 +26,7 @@ public class MyClient{
 					- check if the player has enough points
 				*/
 				
-		/*		conn.sendMessage(msgOut);
+	/*			conn.sendMessage(msgOut);
 				
 				String msgIn = conn.getMessage();
 				
@@ -33,7 +35,8 @@ public class MyClient{
 					System.out.println("POINTS: " + points);
 				}
 			}
-		*/
+	 */
+		
 		} catch (Exception e){}
 		
 	}
