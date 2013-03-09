@@ -12,10 +12,10 @@ public class MyClientWindow extends JFrame{
 	private static final int PLAYER1 = 0;
 	
 	int player;
-	
-	private JPanel bg = new Background();
-	private Image background, boardP1, boardP2;
-	
+	public Character board[][] = new Character[4][12];
+	private JPanel bg = new MyClientPanel(board);
+	MyConnection conn;
+
 	private ImageIcon candy1_p1 = new ImageIcon("images/candycane_p1.png");
 	private ImageIcon candy2_p1 = new ImageIcon("images/chocnut_p1.png");
 	private ImageIcon candy3_p1 = new ImageIcon("images/donut_p1.png");
@@ -31,118 +31,107 @@ public class MyClientWindow extends JFrame{
 	private ImageIcon candy6_p2 = new ImageIcon("images/jellybean_p2_face.png");
 	
 	/*player 1 items*/
-	JPanel player1 = new Player1();
-	JButton candycaneP1 = new JButton(candy1_p1);
-	JButton chocnutP1 = new JButton(candy2_p1);
-	JButton donutP1 = new JButton(candy3_p1);
-	JButton gingerbreadmanP1 = new JButton(candy4_p1);
-	JButton gummybearP1 = new JButton(candy5_p1);
-	JButton jellybeanP1 = new JButton(candy6_p1);
+	JPanel player1 = new JPanel();
+
+	JButton button1_p1 = new JButton(candy1_p1);
+	JButton button2_p1 = new JButton(candy2_p1);
+	JButton button3_p1 = new JButton(candy3_p1);
+	JButton button4_p1 = new JButton(candy4_p1);
+	JButton button5_p1 = new JButton(candy5_p1);
+	JButton button6_p1 = new JButton(candy6_p1);
 	
 	/*player 2 items*/
-	JPanel player2 = new Player2();
-	JButton candycaneP2 = new JButton(candy1_p2);
-	JButton chocnutP2 = new JButton(candy2_p2);
-	JButton donutP2 = new JButton(candy3_p2);
-	JButton gingerbreadmanP2 = new JButton(candy4_p2);
-	JButton gummybearP2 = new JButton(candy5_p2);
-	JButton jellybeanP2 = new JButton(candy6_p2);
+	JPanel player2 = new JPanel();
+	JButton button1_p2 = new JButton(candy1_p2);
+	JButton button2_p2 = new JButton(candy2_p2);
+	JButton button3_p2 = new JButton(candy3_p2);
+	JButton button4_p2 = new JButton(candy4_p2);
+	JButton button5_p2 = new JButton(candy5_p2);
+	JButton button6_p2 = new JButton(candy6_p2);
 	
 	
 	Container c;
 	
-	public MyClientWindow(int player){
+	public MyClientWindow(int player, MyConnection conn){
+		//initialize the board
+		int i=0, j=0;
+		for(i=0; i<4; i++){
+			for(j=0; j<12; j++){
+				board[i][j] = new Character();
+			}
+		}
+		
 		this.player = player;
-		getImages();
 		this.setSize(1105,700);
 		this.setResizable(false);
 		this.setLocation(20,20);
 		c = this.getContentPane();
+		this.conn = conn;
+		this.receiveBoard(conn, board);
+		bg.setOpaque(false);
 		
 		/*PLAYER 1*/
 		player1.setBounds(50, 100, 500, 400);
-		candycaneP1.setBounds(250, 550, 100, 100);
-		chocnutP1.setBounds(350, 550, 100, 100);
-		donutP1.setBounds(450, 550, 100, 100);
-		gingerbreadmanP1.setBounds(550, 550, 100, 100);
-		gummybearP1.setBounds(650, 550, 100, 100);
-		jellybeanP1.setBounds(750, 550, 100, 100);
+		player1.setOpaque(false);
+		
+		button1_p1.setBounds(250, 550, 100, 100);
+		button2_p1.setBounds(350, 550, 100, 100);
+		button3_p1.setBounds(450, 550, 100, 100);
+		button4_p1.setBounds(550, 550, 100, 100);
+		button5_p1.setBounds(650, 550, 100, 100);
+		button6_p1.setBounds(750, 550, 100, 100);
 
   
 		/*PLAYER 2*/
 		player2.setBounds(550, 100, 500, 400);
-		candycaneP2.setBounds(250, 550, 100, 100);
-		chocnutP2.setBounds(350, 550, 100, 100);
-		donutP2.setBounds(450, 550, 100, 100);
-		gingerbreadmanP2.setBounds(550, 550, 100, 100);
-		gummybearP2.setBounds(650, 550, 100, 100);
-		jellybeanP2.setBounds(750, 550, 100, 100);
+		player2.setOpaque(false);
+		button1_p2.setBounds(250, 550, 100, 100);
+		button2_p2.setBounds(350, 550, 100, 100);
+		button3_p2.setBounds(450, 550, 100, 100);
+		button4_p2.setBounds(550, 550, 100, 100);
+		button5_p2.setBounds(650, 550, 100, 100);
+		button6_p2.setBounds(750, 550, 100, 100);
 		
 		c.add(player1);
 		c.add(player2);
 		
 		if(this.player == PLAYER1){
-			c.add(candycaneP1);
-			c.add(chocnutP1);
-			c.add(donutP1);
-			c.add(gingerbreadmanP1);
-			c.add(gummybearP1);
-			c.add(jellybeanP1);
+			c.add(button1_p1);
+			c.add(button2_p1);
+			c.add(button3_p1);
+			c.add(button4_p1);
+			c.add(button5_p1);
+			c.add(button6_p1);
 		} else {
-			c.add(candycaneP2);
-			c.add(chocnutP2);
-			c.add(donutP2);
-			c.add(gingerbreadmanP2);
-			c.add(gummybearP2);
-			c.add(jellybeanP2);	
+			c.add(button1_p2);
+			c.add(button2_p2);
+			c.add(button3_p2);
+			c.add(button4_p2);
+			c.add(button5_p2);
+			c.add(button6_p2);
 		}
 	
 		c.add(bg);
-	}
-
-	private final void getImages() {        
-		 URL url;
-	        try {
-	            url = getClass().getResource("images/bg.jpg");
-	            if(url == null) throw new IOException("Couldn't load bg.jpg");
-	            background = new ImageIcon(url).getImage();
-	            
-	            url = getClass().getResource("images/board_p1.jpg");
-	            if(url == null) throw new IOException("Couldn't load board_p1.jpg");
-	            boardP1 = new ImageIcon(url).getImage();
-	            
-	            url = getClass().getResource("images/board_p2.jpg");
-	            if(url == null) throw new IOException("Couldn't load board_p2.jpg");
-	            boardP2 = new ImageIcon(url).getImage();
-	            
-	           // url = getClass().getResource("images/candycane_p1.png");
-	           // if(url == null) throw new IOException("Couldn't load candycane_p1.png");
-	            //candy1_p1 = new ImageIcon(url).getImage();
-	            
-	        } catch(IOException e) {
-	            System.err.println(e);
-	        }
-    }
-	
-	private class Background extends JPanel{
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);	
-			g.drawImage(background, 0, 0, null);
-		}	
-	}	
-	
-	private class Player1 extends JPanel{
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);	
-			g.drawImage(boardP1, 0, 0, null);
-		}	
+		bg.repaint();
 	}
 	
-	private class Player2 extends JPanel{
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);	
-			g.drawImage(boardP2, 0, 0, null);
-		}	
-	}	
+	public void receiveBoard(MyConnection conn, Character board[][]){
+		int i=0, j=0;
+		String temp="";
+		for(i=0; i<4; i++){
+			for(j=0; j<12; j++){
+				temp = conn.getMessage();
+				board[i][j].name = temp;
+				board[i][j].damage = Integer.parseInt(conn.getMessage());
+				board[i][j].life = Integer.parseInt(conn.getMessage());
+				board[i][j].cost = Integer.parseInt(conn.getMessage());
+				board[i][j].rowNum = Integer.parseInt(conn.getMessage());
+				board[i][j].colNum = Integer.parseInt(conn.getMessage());
+				board[i][j].owner = Integer.parseInt(conn.getMessage());
+			
+			}
+		}
+	
+	}
 
 }
