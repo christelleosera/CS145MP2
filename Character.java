@@ -38,7 +38,7 @@ public class Character{
 	}
 	
 	public void reset(){
-		this.name = null;
+		this.name = "";
 		this.damage = -1;
 		this.life = -1;
 		this.cost = -1;
