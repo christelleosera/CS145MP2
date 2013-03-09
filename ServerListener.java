@@ -10,28 +10,38 @@ public class ServerListener extends Thread{
 	Socket s;
 	int playerNum;
 	MyConnection conn;
-	Character board[][];
+	Character board[][] = new Character[4][12];
 	Boolean done[];
-	
+	int i,j;
 	
 	public ServerListener(Socket s, int playerNum, MyConnection conn, Character board[][], Boolean done[]){
+		for(i=0; i<4; i++){
+			for(j=0; j<12; j++){
+				this.board[i][j] = new Character();
+			}
+		}
 		this.playerNum = playerNum;
 		this.s = s;
 		this.conn = conn;
 		this.board = board;
 		this.done = done;
+
 		//start();
 	}
 	
 	public void run(){
 		try{
+			
 			MyConnection conn = new MyConnection(s);
+				
 			//send the client his/her player number
 			conn.sendMessage("" + playerNum + "");	
+			//conn.sendMessage("KOY-koy");
+			this.sendBoard(conn, board);
 			String msgIn = "";
 			//msgIn syntax:	CREATE charactername rowNum colNum
 			
-			while((msgIn = conn.getMessage()) != null && msgIn.equals("DONE") == false){
+	/*		while((msgIn = conn.getMessage()) != null && msgIn.equals("DONE") == false){
 				String token ="";
 				int i = 0;
 				System.out.println(msgIn);
@@ -49,15 +59,15 @@ public class ServerListener extends Thread{
 					int rowNum = msgIn.charAt(i+1) - 48;
 					int colNum = msgIn.charAt(i+3) - 48;
 					
-					/*//if the specified location is not empty
-					if(board[rowNum][colNum].name != null){
+					/*///if the specified location is not empty
+		/*			if(board[rowNum][colNum].name != null){
 						String msgOut = "Cannot insert. Location already taken by another character.$";
 						break;
 					}*/ //yung checking pala sa client natin ilalagay pati yung pag-check kung enough yung points
 					
 					//else get the details
 			
-					if(charName.equals("gingerbread")){
+		/*			if(charName.equals("gingerbread")){
 						board[rowNum][colNum] = new Character(charName, 20, 100, 25, rowNum, colNum,  playerNum);	
 					}
 					
@@ -91,7 +101,7 @@ public class ServerListener extends Thread{
 			done[playerNum] = true;
 			if(done[PLAYER1] && done[PLAYER2])
 					fightStart(board);
-			
+		*/	
 		}catch(Exception e){e.printStackTrace();}	
 		
 	
@@ -109,5 +119,20 @@ public class ServerListener extends Thread{
 		}
 	}
 
+	public void sendBoard(MyConnection conn, Character board[][]){
+		int i=0, j=0;
+		for(i=0; i<4; i++){
+			for(j=0; j<12; j++){
+				conn.sendMessage("" + board[i][j].name + "");
+				conn.sendMessage("" + board[i][j].damage + "");
+				conn.sendMessage("" + board[i][j].life + "");
+				conn.sendMessage("" + board[i][j].cost + "");
+				conn.sendMessage("" + board[i][j].rowNum + "");
+				conn.sendMessage("" + board[i][j].colNum + "");
+				conn.sendMessage("" + board[i][j].owner + "");
+			}
+		}
+	
+	}
 
 }
