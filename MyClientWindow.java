@@ -16,19 +16,19 @@ public class MyClientWindow extends JFrame{
 	private JPanel bg = new MyClientPanel(board);
 	MyConnection conn;
 
-	private ImageIcon candy1_p1 = new ImageIcon("images/candycane_p1.png");
-	private ImageIcon candy2_p1 = new ImageIcon("images/chocnut_p1.png");
-	private ImageIcon candy3_p1 = new ImageIcon("images/donut_p1.png");
-	private ImageIcon candy4_p1 = new ImageIcon("images/gingerbreadman_p1.gif");
-	private ImageIcon candy5_p1 = new ImageIcon("images/gummybear_p1.png");
-	private ImageIcon candy6_p1 = new ImageIcon("images/jellybean_p1_face.png");
+	private ImageIcon candy1_p1 = new ImageIcon("images/card_candycane_p1.png");
+	private ImageIcon candy2_p1 = new ImageIcon("images/card_chocnut_p1.png");
+	private ImageIcon candy3_p1 = new ImageIcon("images/card_donut_p1.png");
+	private ImageIcon candy4_p1 = new ImageIcon("images/card_gingerbreadman_p1.png");
+	private ImageIcon candy5_p1 = new ImageIcon("images/card_gummybear_p1.png");
+	private ImageIcon candy6_p1 = new ImageIcon("images/card_jellybean_p1.png");
 	
-	private ImageIcon candy1_p2 = new ImageIcon("images/candycane_p2.png");
-	private ImageIcon candy2_p2 = new ImageIcon("images/chocnut_p2.png");
-	private ImageIcon candy3_p2 = new ImageIcon("images/donut_p2.png");
-	private ImageIcon candy4_p2 = new ImageIcon("images/gingerbreadman_p2.gif");
-	private ImageIcon candy5_p2 = new ImageIcon("images/gummybear_p2.png");
-	private ImageIcon candy6_p2 = new ImageIcon("images/jellybean_p2_face.png");
+	private ImageIcon candy1_p2 = new ImageIcon("images/card_candycane_p2.png");
+	private ImageIcon candy2_p2 = new ImageIcon("images/card_chocnut_p2.png");
+	private ImageIcon candy3_p2 = new ImageIcon("images/card_donut_p2.png");
+	private ImageIcon candy4_p2 = new ImageIcon("images/card_gingerbreadman_p2.png");
+	private ImageIcon candy5_p2 = new ImageIcon("images/card_gummybear_p2.png");
+	private ImageIcon candy6_p2 = new ImageIcon("images/card_jellybean_p2.png");
 	
 	/*player 1 items*/
 	JPanel player1 = new JPanel();
@@ -74,23 +74,23 @@ public class MyClientWindow extends JFrame{
 		player1.setBounds(50, 100, 500, 400);
 		player1.setOpaque(false);
 		
-		button1_p1.setBounds(250, 550, 100, 100);
-		button2_p1.setBounds(350, 550, 100, 100);
-		button3_p1.setBounds(450, 550, 100, 100);
-		button4_p1.setBounds(550, 550, 100, 100);
-		button5_p1.setBounds(650, 550, 100, 100);
-		button6_p1.setBounds(750, 550, 100, 100);
+		button1_p1.setBounds(250, 530, 100, 122);
+		button2_p1.setBounds(350, 530, 100, 122);
+		button3_p1.setBounds(450, 530, 100, 122);
+		button4_p1.setBounds(550, 530, 100, 122);
+		button5_p1.setBounds(650, 530, 100, 122);
+		button6_p1.setBounds(750, 530, 100, 122);
 
   
 		/*PLAYER 2*/
 		player2.setBounds(550, 100, 500, 400);
 		player2.setOpaque(false);
-		button1_p2.setBounds(250, 550, 100, 100);
-		button2_p2.setBounds(350, 550, 100, 100);
-		button3_p2.setBounds(450, 550, 100, 100);
-		button4_p2.setBounds(550, 550, 100, 100);
-		button5_p2.setBounds(650, 550, 100, 100);
-		button6_p2.setBounds(750, 550, 100, 100);
+		button1_p2.setBounds(250, 530, 100, 122);
+		button2_p2.setBounds(350, 530, 100, 122);
+		button3_p2.setBounds(450, 530, 100, 122);
+		button4_p2.setBounds(550, 530, 100, 122);
+		button5_p2.setBounds(650, 530, 100, 122);
+		button6_p2.setBounds(750, 530, 100, 122);
 		
 		c.add(player1);
 		c.add(player2);

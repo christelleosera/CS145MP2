@@ -21,16 +21,16 @@ public class MyClientPanel extends JPanel{
 	private final void getImages() { 
 		 URL url;
 	        try {
-	            url = getClass().getResource("images/bg.jpg");
-	            if(url == null) throw new IOException("Couldn't load bg.jpg");
+	            url = getClass().getResource("images/bg.png");
+	            if(url == null) throw new IOException("Couldn't load bg.png");
 	            background = new ImageIcon(url).getImage();
 	            
-	            url = getClass().getResource("images/board_p1.jpg");
-	            if(url == null) throw new IOException("Couldn't load board_p1.jpg");
+	            url = getClass().getResource("images/board_p1.png");
+	            if(url == null) throw new IOException("Couldn't load board_p1.png");
 	            board_p1 = new ImageIcon(url).getImage();
 	            
-	            url = getClass().getResource("images/board_p2.jpg");
-	            if(url == null) throw new IOException("Couldn't load board_p2.jpg");
+	            url = getClass().getResource("images/board_p2.png");
+	            if(url == null) throw new IOException("Couldn't load board_p2.png");
 	            board_p2 = new ImageIcon(url).getImage();
 	            
 	            url = getClass().getResource("images/candycane_p1.png");
