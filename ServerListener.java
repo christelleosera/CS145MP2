@@ -10,13 +10,13 @@ public class ServerListener extends Thread{
 	Socket s;
 	int playerNum;
 	MyConnection conn;
-	Character board[][] = new Character[4][12];
+	Character board[][] = new Character[4][10];
 	Boolean done[];
 	int i,j;
 	
 	public ServerListener(Socket s, int playerNum, MyConnection conn, Character board[][], Boolean done[]){
 		for(i=0; i<4; i++){
-			for(j=0; j<12; j++){
+			for(j=0; j<10; j++){
 				this.board[i][j] = new Character();
 			}
 		}
@@ -112,7 +112,7 @@ public class ServerListener extends Thread{
 		System.out.println("fightStart!");
 		int i=0, j=0;
 		for(i=0; i<4; i++){
-			for(j=1; j<11; j++){
+			for(j=1; j<9; j++){
 				if(board[i][j].isOccupied())
 					board[i][j].attack(board);
 			}
@@ -122,7 +122,7 @@ public class ServerListener extends Thread{
 	public void sendBoard(MyConnection conn, Character board[][]){
 		int i=0, j=0;
 		for(i=0; i<4; i++){
-			for(j=0; j<12; j++){
+			for(j=0; j<10; j++){
 				conn.sendMessage("" + board[i][j].name + "");
 				conn.sendMessage("" + board[i][j].damage + "");
 				conn.sendMessage("" + board[i][j].life + "");

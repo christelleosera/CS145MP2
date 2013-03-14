@@ -4,7 +4,7 @@ import java.net.*;
 public class MyClient{
   public static void main(String args[]) {
 		int points = 250, i, j, playernum;
-		Character board[][] = new Character[4][12];
+		Character board[][] = new Character[4][10];
 		String temp = "";
 				
 		try{

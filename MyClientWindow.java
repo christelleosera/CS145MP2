@@ -12,7 +12,7 @@ public class MyClientWindow extends JFrame{
 	private static final int PLAYER1 = 0;
 	
 	int player;
-	public Character board[][] = new Character[4][12];
+	public Character board[][] = new Character[4][10];
 	private JPanel bg = new MyClientPanel(board);
 	MyConnection conn;
 
@@ -56,7 +56,7 @@ public class MyClientWindow extends JFrame{
 		//initialize the board
 		int i=0, j=0;
 		for(i=0; i<4; i++){
-			for(j=0; j<12; j++){
+			for(j=0; j<10; j++){
 				board[i][j] = new Character();
 			}
 		}
@@ -113,13 +113,16 @@ public class MyClientWindow extends JFrame{
 	
 		c.add(bg);
 		bg.repaint();
+		//Receive r = new Receive();
+		//r.start();
+		
 	}
 	
 	public void receiveBoard(MyConnection conn, Character board[][]){
 		int i=0, j=0;
 		String temp="";
 		for(i=0; i<4; i++){
-			for(j=0; j<12; j++){
+			for(j=0; j<10; j++){
 				temp = conn.getMessage();
 				board[i][j].name = temp;
 				board[i][j].damage = Integer.parseInt(conn.getMessage());
@@ -132,6 +135,14 @@ public class MyClientWindow extends JFrame{
 			}
 		}
 	
+	}
+	
+	private class Receive extends Thread {
+		String temp="";
+		public void run(){
+			receiveBoard(conn, board);
+			bg.repaint();
+		}
 	}
 
 }
