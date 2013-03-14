@@ -10,11 +10,14 @@ public class AttackThread extends Thread{
 	Character board[][];
 	int rowNum;
 	int colNum;
+	//MyConnection conn;
 	
 	public AttackThread(Character board[][], int rowNum, int colNum){
+	//public AttackThread(Character board[][], int rowNum, int colNum, MyConnection conn){
 		this.board = board;
 		this.rowNum = rowNum;
 		this.colNum = colNum;
+	//	this.conn = conn;
 		start();
 	}
 	

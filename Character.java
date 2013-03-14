@@ -9,6 +9,7 @@ public class Character{
 	int rowNum;
 	int colNum;
 	int owner;
+	//MyConnection conn;
 	
 	public Character(){
 		this.reset();
@@ -22,6 +23,7 @@ public class Character{
 		this.rowNum = rowNum;
 		this.colNum = colNum;
 		this.owner = player; 
+		//this.conn = conn;
 	}
 	
 	public void attack(Character board[][]){
