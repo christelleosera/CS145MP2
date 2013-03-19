@@ -30,6 +30,10 @@ public class MyClientWindow extends JFrame{
 	private ImageIcon candy5_p2 = new ImageIcon("images/card_gummybear_p2.png");
 	private ImageIcon candy6_p2 = new ImageIcon("images/card_jellybean_p2.png");
 	
+	private ImageIcon go_btn = new ImageIcon("images/go_btn.png");
+	
+//	private Border emptyBorder = BorderFactory.createEmptyBorder();
+	
 	/*player 1 items*/
 	JPanel player1 = new JPanel();
 
@@ -49,6 +53,8 @@ public class MyClientWindow extends JFrame{
 	JButton button5_p2 = new JButton(candy5_p2);
 	JButton button6_p2 = new JButton(candy6_p2);
 	
+	/*button*/
+	JButton button_go = new JButton(go_btn);
 	
 	Container c;
 	
@@ -62,7 +68,8 @@ public class MyClientWindow extends JFrame{
 		}
 		
 		this.player = player;
-		this.setSize(1105,700);
+	//	this.setSize(1105,700);
+		this.setSize(1105,750);
 		this.setResizable(false);
 		this.setLocation(20,20);
 		c = this.getContentPane();
@@ -74,26 +81,42 @@ public class MyClientWindow extends JFrame{
 		player1.setBounds(50, 100, 500, 400);
 		player1.setOpaque(false);
 		
-		button1_p1.setBounds(250, 530, 100, 122);
+		button1_p1.setBounds(165, 520, 120, 150);
+		button2_p1.setBounds(295, 520, 120, 150);
+		button3_p1.setBounds(425, 520, 120, 150);
+		button4_p1.setBounds(555, 520, 120, 150);
+		button5_p1.setBounds(685, 520, 120, 150);
+		button6_p1.setBounds(815, 520, 120, 150);
+		
+	/*	button1_p1.setBounds(250, 530, 100, 122);
 		button2_p1.setBounds(350, 530, 100, 122);
 		button3_p1.setBounds(450, 530, 100, 122);
 		button4_p1.setBounds(550, 530, 100, 122);
 		button5_p1.setBounds(650, 530, 100, 122);
 		button6_p1.setBounds(750, 530, 100, 122);
-
+*/
   
 		/*PLAYER 2*/
 		player2.setBounds(550, 100, 500, 400);
 		player2.setOpaque(false);
-		button1_p2.setBounds(250, 530, 100, 122);
+		button1_p2.setBounds(165, 520, 120, 150);
+		button2_p2.setBounds(295, 520, 120, 150);
+		button3_p2.setBounds(425, 520, 120, 150);
+		button4_p2.setBounds(555, 520, 120, 150);
+		button5_p2.setBounds(685, 520, 120, 150);
+		button6_p2.setBounds(815, 520, 120, 150);
+	/*	button1_p2.setBounds(250, 530, 100, 122);
 		button2_p2.setBounds(350, 530, 100, 122);
 		button3_p2.setBounds(450, 530, 100, 122);
 		button4_p2.setBounds(550, 530, 100, 122);
 		button5_p2.setBounds(650, 530, 100, 122);
 		button6_p2.setBounds(750, 530, 100, 122);
-		
+	*/	
 		c.add(player1);
 		c.add(player2);
+		
+		button_go.setBounds(465, 15, 180, 70);
+		c.add(button_go);
 		
 		if(this.player == PLAYER1){
 			c.add(button1_p1);
