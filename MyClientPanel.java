@@ -16,12 +16,16 @@ public class MyClientPanel extends JPanel{
 	private Image candycane_p2, chocnut_p2, donut_p2, gingerbread_p2, gummybear_p2, jellybean_p2, cupcake_p2;
 	
 	Character board[][];
+	int points;
+	
+	
 	 
 	private Image background, board_p1, board_p2;
-	public MyClientPanel(Character board[][]){
+	public MyClientPanel(Character board[][], int points){
 		this.getImages();
-		this.setSize(1105,700);
+		this.setSize(1105,750);
 		this.board = board;
+		this.points = points;
 	}
 	
 	private final void getImages() { 
@@ -113,11 +117,12 @@ public class MyClientPanel extends JPanel{
 			for(j=0; j<10; j++){
 				owner = board[i][j].owner;
 				name = board[i][j].name;
-				System.out.println("owner: " + owner + " name: " + name);
+				//System.out.println("owner: " + owner + " name: " + name);
+				
 				if(owner == PLAYER1){
 					if(name.equals("cupcake"))
 						g.drawImage(cupcake_p1, 50+(j*100), 100+(i*100), null);
-					else if(name.equals("canycane"))
+					else if(name.equals("candycane"))
 						g.drawImage(candycane_p1, 50+(j*100), 100+(i*100), null);
 					else if(name.equals("chocnut"))
 						g.drawImage(chocnut_p1, 50+(j*100), 100+(i*100), null);
@@ -129,11 +134,12 @@ public class MyClientPanel extends JPanel{
 						g.drawImage(gummybear_p1, 50+(j*100), 100+(i*100), null);
 					else if(name.equals("jellybean"))
 						g.drawImage(jellybean_p1, 50+(j*100), 100+(i*100), null);
+					
 				}
 				else if(owner == PLAYER2){
 					if(name.equals("cupcake"))
 						g.drawImage(cupcake_p2, 50+(j*100), 100+(i*100), null);
-					else if(name.equals("canycane"))
+					else if(name.equals("candycane"))
 						g.drawImage(candycane_p2, 50+(j*100), 100+(i*100), null);
 					else if(name.equals("chocnut"))
 						g.drawImage(chocnut_p2, 50+(j*100), 100+(i*100), null);
