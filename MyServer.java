@@ -21,7 +21,7 @@ public class MyServer {
 		}
 		
 		//cupcakes
-		board[0][0] = new Character("cupcake", 0, 300, 0, 0, 0, 0);
+		/*board[0][0] = new Character("cupcake", 0, 300, 0, 0, 0, 0);
 		board[1][0] = new Character("cupcake", 0, 300, 0, 1, 0, 0);
 		board[2][0] = new Character("cupcake", 0, 300, 0, 2, 0, 0);
 		board[3][0] = new Character("cupcake", 0, 300, 0, 3, 0, 0);
@@ -29,7 +29,7 @@ public class MyServer {
 		board[0][9] = new Character("cupcake", 0, 300, 0, 0, 11, 1);
 		board[1][9] = new Character("cupcake", 0, 300, 0, 1, 11, 1);
 		board[2][9] = new Character("cupcake", 0, 300, 0, 2, 11, 1);
-		board[3][9] = new Character("cupcake", 0, 300, 0, 3, 11, 1);
+		board[3][9] = new Character("cupcake", 0, 300, 0, 3, 11, 1);*/
 		
 				
 		try {
@@ -54,4 +54,3 @@ public class MyServer {
 	
 	
 }
-
