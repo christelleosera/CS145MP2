@@ -37,7 +37,7 @@ public class ServerListener extends Thread{
 			//send the client his/her player number
 			conn.sendMessage("" + playerNum + "");	
 			//conn.sendMessage("KOY-koy");
-			this.sendBoard(conn, board);
+		//	this.sendBoard(conn, board);
 			String msgIn = "";
 			//msgIn syntax:	CREATE charactername rowNum colNum
 			
