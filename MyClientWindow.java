@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	private static final int PLAYER2 = 1;
 	int points = 300;
 	int player;
-	public Character board[][] = new Character[4][12];
+	public Character board[][] = new Character[4][10];
 	private JPanel bg = new MyClientPanel(board, points);
 	MyConnection conn;
 
@@ -62,13 +63,11 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	Container c;
 	String charName;
 	
-	
 	public MyClientWindow(int player, MyConnection conn){
-		
 		//initialize the board
 		int i=0, j=0;
 		for(i=0; i<4; i++){
-			for(j=0; j<12; j++){
+			for(j=0; j<10; j++){
 				board[i][j] = new Character();
 			}
 		}
@@ -87,7 +86,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		this.setResizable(false);
 		this.setLocation(20,20);
 		c = this.getContentPane();
-	//	this.conn = conn;
+		this.conn = conn;
 	//	this.receiveBoard(conn, board);
 		bg.setOpaque(false);
 		c.add(points_lbl);
@@ -144,7 +143,8 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	
 		c.add(bg);
 		bg.repaint();
-		
+	//	Receive r = new Receive();
+	//	r.start();
 		button1_p1.addActionListener(this);
 		button1_p1.setActionCommand("candycane");
 		button2_p1.addActionListener(this);
@@ -170,17 +170,16 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		button5_p2.setActionCommand("gummybear");
 		button6_p2.addActionListener(this);
 		button6_p2.setActionCommand("jellybean");
-		
-		button_go.addActionListener(this);
-		button_go.setActionCommand("fight");
+		Go go = new Go();
+		button_go.addActionListener(go);
+		//button_go.setActionCommand("fight");
 	}
-	
 	
 	public void receiveBoard(MyConnection conn, Character board[][]){
 		int i=0, j=0;
 		String temp="";
 		for(i=0; i<4; i++){
-			for(j=0; j<4; j++){
+			for(j=0; j<10; j++){
 				temp = conn.getMessage();
 				board[i][j].name = temp;
 				board[i][j].damage = Integer.parseInt(conn.getMessage());
@@ -245,13 +244,6 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 					cost = 50;
 				}
 					
-				
-					
-				
-					
-				
-	
-	
 		int rowNum = (y-105)/100;
 		int colNum = (x-55)/100;
 		if(player == PLAYER1 && x >= 155 && x <= 545 && y >= 105 && y <= 495 && board[rowNum][colNum].isOccupied() == false){
@@ -306,12 +298,81 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		charName = e.getActionCommand();
 		if(charName.equals("fight") == false)
 			bg.addMouseListener(this);
-		else {
-			//game starts
-			//first send player's board to server
-			//server merges player 1 and player 2's boards
-			//sends the board to both players
+	}
+	
+	private class Go implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			sendDone();	
+		}
+	}
+	
+	private void sendDone(){
+		conn.sendMessage("DONE");
+		button_go.setVisible(false);
+		if(this.player == PLAYER1){
+			button1_p1.setVisible(false);
+			button2_p1.setVisible(false);
+			button3_p1.setVisible(false);
+			button4_p1.setVisible(false);
+			button5_p1.setVisible(false);
+			button6_p1.setVisible(false);
+		} else if(this.player == PLAYER2){
+			button1_p2.setVisible(false);
+			button2_p2.setVisible(false);
+			button3_p2.setVisible(false);
+			button4_p2.setVisible(false);
+			button5_p2.setVisible(false);
+			button6_p2.setVisible(false);
+		}
+		//send Own Board
+		sendBoard(this.conn,this.board, player);
+	
+		Receive r = new Receive();
+		r.start();
 		
+	}
+	
+	
+	private class Receive extends Thread {
+		String temp="";
+		public void run(){
+			temp = conn.getMessage();
+			if(temp.contains("START")){
+				//get an initial copy of the board.
+				receiveBoard(conn, board);
+				System.out.println("updateBoard.");
+			}
+			bg.repaint();
+		}
+	}
+
+	public void sendBoard(MyConnection conn, Character board[][], int player){
+		int i=0, j=0;
+		if(player == PLAYER1){
+			for(i=0; i<4; i++){
+				for(j=0; j<5; j++){
+					conn.sendMessage("" + board[i][j].name + "");
+					conn.sendMessage("" + board[i][j].damage + "");
+					conn.sendMessage("" + board[i][j].life + "");
+					conn.sendMessage("" + board[i][j].cost + "");
+					conn.sendMessage("" + board[i][j].rowNum + "");
+					conn.sendMessage("" + board[i][j].colNum + "");
+					conn.sendMessage("" + board[i][j].owner + "");
+				}
+			}
+		}
+		else if(player == PLAYER2){
+			for(i=0; i<4; i++){
+				for(j=5; j<10; j++){
+					conn.sendMessage("" + board[i][j].name + "");
+					conn.sendMessage("" + board[i][j].damage + "");
+					conn.sendMessage("" + board[i][j].life + "");
+					conn.sendMessage("" + board[i][j].cost + "");
+					conn.sendMessage("" + board[i][j].rowNum + "");
+					conn.sendMessage("" + board[i][j].colNum + "");
+					conn.sendMessage("" + board[i][j].owner + "");
+				}
+			}
 		}
 	
 	}
