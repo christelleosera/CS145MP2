@@ -336,13 +336,17 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	private class Receive extends Thread {
 		String temp="";
 		public void run(){
-			temp = conn.getMessage();
-			if(temp.contains("START")){
-				//get an initial copy of the board.
-				receiveBoard(conn, board);
-				System.out.println("updateBoard.");
+			System.out.println("Err. Irreceive ko na yung board ha? ");
+			
+			while(true){
+				temp = conn.getMessage();
+				if(temp.contains("UPDATE")){
+					//get a copy of the board.
+					receiveBoard(conn, board);
+					System.out.println("updateBoard.");
+				}
+				bg.repaint();
 			}
-			bg.repaint();
 		}
 	}
 

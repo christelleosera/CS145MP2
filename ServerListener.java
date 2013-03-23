@@ -54,17 +54,11 @@ public class ServerListener extends Thread{
 					if(done[PLAYER1] && done[PLAYER2]){	
 						//get a copy of combined board
 						copyBoard(clientsList, this.board); 
-						System.out.println("This is the type of board that I have. ");
-						for(i=0; i<4; i++){
-							for(j=0; j<10; j++){
-								System.out.println(i + "-" + j + "-" + board[i][j].name);
-							}
-						}
-						
+					
 						//send copy of board to both players
 						sendToAll();
 
-						//fightStart(board,conn);
+						fightStart(board, conn, clientsList);
 					}
 				}
 			}
@@ -85,13 +79,13 @@ public class ServerListener extends Thread{
 	}
 	
 	//para sabay sabay magsstart magfire. :D
-	private void fightStart(Character board[][], MyConnection conn){
+	private void fightStart(Character board[][], MyConnection conn, List<Clients> clientsList){
 		System.out.println("fightStart!");
 		int i=0, j=0;
 		for(i=0; i<4; i++){
 			for(j=1; j<9; j++){
 				if(board[i][j].isOccupied())
-					board[i][j].attack(board, conn);
+					board[i][j].attack(board, conn, clientsList);
 			}
 		}
 	}
@@ -192,7 +186,7 @@ public class ServerListener extends Thread{
 		while(itr.hasNext()){
 			Clients c = (Clients) itr.next();
 			MyConnection current = c.conn;
-			current.sendMessage("START");
+			current.sendMessage("UPDATE");
 			sendBoard(current,board);
 
 		}	
