@@ -1,5 +1,9 @@
 import java.io.*;
+import java.util.Iterator;
+import java.util.List;
 import java.net.*;
+
+import javax.swing.JOptionPane;
 
 
 
@@ -11,22 +15,25 @@ public class AttackThread extends Thread{
 	int rowNum;
 	int colNum;
 	MyConnection conn;
+	List<Clients> clientsList;
 	
 	//public AttackThread(Character board[][], int rowNum, int colNum){
-	public AttackThread(Character board[][], int rowNum, int colNum, MyConnection conn){
+	public AttackThread(Character board[][], int rowNum, int colNum, MyConnection conn, List<Clients> clientsList){
 		this.board = board;
 		this.rowNum = rowNum;
 		this.colNum = colNum;
 		this.conn = conn;
+		this.clientsList = clientsList;
 		start();
+
 	}
 	
 	public void run(){
 		int oppColNum=-1; //location of opponent
 		int i=0;
 		int opponentCount=0;
-		
-		while(true){
+		Boolean winner = false;
+		while(!winner){
 			
 			
 			synchronized(board[rowNum][colNum]){
@@ -39,7 +46,8 @@ public class AttackThread extends Thread{
 						 if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
 							damageOpponent(rowNum, oppColNum);
 							opponentCount++;
-							this.sendBoard(conn, board);
+							//this.sendBoard(conn, board);
+							sendToAll(board);
 						}
 					}
 					if(opponentCount == 0)
@@ -54,16 +62,22 @@ public class AttackThread extends Thread{
 					oppColNum = findNearestOpponent(rowNum);
 					if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
 						damageOpponent(rowNum, oppColNum);	
-						this.sendBoard(conn, board);
+						//this.sendBoard(conn, board);
+						sendToAll(board);
 					} else{
-						//System.out.println("WALA NA AKONG KALABAN! O__O break naa! ");
-						this.sendBoard(conn, board);
+						
+						System.out.println("WALA NA AKONG KALABAN! O__O break naa! ");
+						//this.sendBoard(conn, board);
+						sendToAll(board);
 						break;
 					}
 				}
+				winner = checkWinner(board);
 			}
+			
 		}
-		//System.out.println("ako si " + board[rowNum][colNum].name + " at dedz na ko.");
+		sendToAll(board);
+		System.out.println("ako si " + board[rowNum][colNum].name + " at dedz na ko.");
 		//code to display board
 		//code to send board to client
 
@@ -73,14 +87,14 @@ public class AttackThread extends Thread{
 	private int findNearestOpponent(int rowNum){
 		int i=0;
 		if(board[rowNum][colNum].owner == PLAYER1){
-			for(i=6; i<12; i++){
+			for(i=5; i<10; i++){
 				if(board[rowNum][i].isOccupied() == true){
 					return i;
 				}
 			}
 		}
 		else{
-			for(i=5; i>=0; i--){
+			for(i=4; i>=0; i--){
 				if(board[rowNum][i].isOccupied() == true){
 					return i;
 				}
@@ -94,21 +108,22 @@ public class AttackThread extends Thread{
 	private void damageOpponent(int oppRowNum, int oppColNum){
 		synchronized(board[rowNum][colNum]){
 			if(iStillExists(board)){
-			//	System.out.println("Location ng kalaban ko: " + oppRowNum + " , " + oppColNum);
+				System.out.println("Location ng kalaban ko: " + oppRowNum + " , " + oppColNum);
 				//change the values of oppRowNum & oppColNum
 				board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
 				//^ life of opponent = old life - damage of this character;
-			//	System.out.println("YES I AM " + board[rowNum][colNum].name + " and I am damaging " + board[oppRowNum][oppColNum].name + " new life: " + board[oppRowNum][oppColNum].life);
+				System.out.println("YES I AM " + board[rowNum][colNum].name + "of player " + board[rowNum][colNum].owner + " and I am damaging " + board[oppRowNum][oppColNum].name + " new life: " + board[oppRowNum][oppColNum].life);
 				
 				if(board[oppRowNum][oppColNum].life <= 0){ // if deads na
 					board[oppRowNum][oppColNum].reset();
 				}
+				
 			}
 		}
 	}
 	
 	private boolean iStillExists(Character board[][]){
-		if(board[rowNum][colNum].name == null)
+		if(board[rowNum][colNum].name == "")
 			return false;
 		else
 			return true;
@@ -127,6 +142,34 @@ public class AttackThread extends Thread{
 				conn.sendMessage("" + board[i][j].owner + "");
 			}
 		}
+		
 	
+	}
+	
+	private void sendToAll(Character board[][]){
+		
+		Iterator itr = clientsList.iterator();
+		while(itr.hasNext()){
+			Clients c = (Clients) itr.next();
+			MyConnection current = c.conn;
+			synchronized(current){
+				current.sendMessage("UPDATE");
+				sendBoard(current,board);
+			}
+		}	
+	}
+	
+	private boolean checkWinner(Character board[][]){
+		int i=0,j=0;
+		//for player1
+		if(board[0][9].owner == -1 || board[1][9].owner == -1 || board[2][9].owner == -1 || board[3][9].owner == -1 ){
+			JOptionPane.showMessageDialog(null, "PLAYER1 wins!");
+			return true;
+		}
+		else if(board[0][0].owner == -1 || board[1][0].owner == -1 || board[2][0].owner == -1 || board[3][0].owner == -1 ){
+			JOptionPane.showMessageDialog(null, "PLAYER2 wins!");
+			return true;
+		}
+		return false;
 	}
 }
