@@ -1,5 +1,10 @@
 import java.io.*;
+import javax.swing.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.*;
 
 
 public class ServerListener extends Thread{
@@ -10,93 +15,65 @@ public class ServerListener extends Thread{
 	Socket s;
 	int playerNum;
 	MyConnection conn;
+	List<Clients> clientsList;
 	Character board[][] = new Character[4][10];
 	Boolean done[];
 	int i,j;
 	
-	public ServerListener(Socket s, int playerNum, MyConnection conn, Character board[][], Boolean done[]){
-		for(i=0; i<4; i++){
-			for(j=0; j<10; j++){
-				this.board[i][j] = new Character();
-			}
-		}
+	public ServerListener(Socket s, int playerNum, MyConnection conn, List<Clients> clientsList, Character board[][], Boolean done[]){
 		this.playerNum = playerNum;
 		this.s = s;
 		this.conn = conn;
+		this.clientsList = clientsList;
 		this.board = board;
 		this.done = done;
+		this.conn.sendMessage("" + playerNum + ""); //send the client his/her player number
 
 		//start();
 	}
 	
 	public void run(){
-		try{
-			
-			MyConnection conn = new MyConnection(s);
-				
-			//send the client his/her player number
-			conn.sendMessage("" + playerNum + "");	
-			//conn.sendMessage("KOY-koy");
-		//	this.sendBoard(conn, board);
+		try{	
 			String msgIn = "";
+			//initialize board
+			for(i=0; i<4; i++){
+				for(j=0; j<10; j++){
+					this.board[i][j] = new Character();
+				}
+			}
+			while(true){
+				msgIn = conn.getMessage();
+				if(msgIn.equals("DONE")){
+					//get player's board
+					receiveBoard(conn, this.board, playerNum);
+					
+					//update copy of board for both players
+					updateBoards(clientsList, this.board, playerNum);
+					done[playerNum] = true;
+					
+					if(done[PLAYER1] && done[PLAYER2]){	
+						//get a copy of combined board
+						copyBoard(clientsList, this.board); 
+						System.out.println("This is the type of board that I have. ");
+						for(i=0; i<4; i++){
+							for(j=0; j<10; j++){
+								System.out.println(i + "-" + j + "-" + board[i][j].name);
+							}
+						}
+						
+						//send copy of board to both players
+						sendToAll();
+
+						//fightStart(board,conn);
+					}
+				}
+			}
+			
+			
+		
 			//msgIn syntax:	CREATE charactername rowNum colNum
 			
-	/*		while((msgIn = conn.getMessage()) != null && msgIn.equals("DONE") == false){
-				String token ="";
-				int i = 0;
-				System.out.println(msgIn);
-				if(msgIn.substring(0,6).equals("CREATE")){
-				
-					//parsing stuff
-					i = 7;
-					while(msgIn.charAt(i) != ' ') {
-						token = token + msgIn.charAt(i);
-						i++;
-					}
-					
-					String charName = token;
-					token = "";
-					int rowNum = msgIn.charAt(i+1) - 48;
-					int colNum = msgIn.charAt(i+3) - 48;
-					
-					/*///if the specified location is not empty
-		/*			if(board[rowNum][colNum].name != null){
-						String msgOut = "Cannot insert. Location already taken by another character.$";
-						break;
-					}*/ //yung checking pala sa client natin ilalagay pati yung pag-check kung enough yung points
-					
-					//else get the details
-			
-		/*			if(charName.equals("gingerbread")){
-						board[rowNum][colNum] = new Character(charName, 20, 100, 25, rowNum, colNum,  playerNum);	
-					}
-					
-					else if(charName.equals("jellybean")){
-						board[rowNum][colNum] = new Character(charName, 0, 200, 50, rowNum, colNum,  playerNum);
-					}
-					
-					else if(charName.equals("gummybear")){
-						board[rowNum][colNum] = new Character(charName, 10, 100, 15, rowNum, colNum,  playerNum);
-					}
-					
-					else if(charName.equals("candycane")){
-						board[rowNum][colNum] = new Character(charName, 0, 200, 50, rowNum, colNum,  playerNum);
-					}
-					
-					else if(charName.equals("chocnut")){
-						board[rowNum][colNum] = new Character(charName, 30, 100, 40, rowNum, colNum,  playerNum);
-					}
-					
-					else if(charName.equals("donut")){
-						board[rowNum][colNum] = new Character(charName, 10, 100, 100, rowNum, colNum,  playerNum);
-					}
-					
-					String msgOut = "$" + board[rowNum][colNum].cost;
-					conn.sendMessage(msgOut);
-					
-				}
-				
-			}
+	/*
 			System.out.println("nag exit ako");
 			done[playerNum] = true;
 			if(done[PLAYER1] && done[PLAYER2])
@@ -108,13 +85,13 @@ public class ServerListener extends Thread{
 	}
 	
 	//para sabay sabay magsstart magfire. :D
-	private void fightStart(Character board[][]){
+	private void fightStart(Character board[][], MyConnection conn){
 		System.out.println("fightStart!");
 		int i=0, j=0;
 		for(i=0; i<4; i++){
 			for(j=1; j<9; j++){
 				if(board[i][j].isOccupied())
-					board[i][j].attack(board);
+					board[i][j].attack(board, conn);
 			}
 		}
 	}
@@ -134,5 +111,90 @@ public class ServerListener extends Thread{
 		}
 	
 	}
+	
+	public void receiveBoard(MyConnection conn, Character board[][], int player){
+		int i=0, j=0;
+		String temp="";
+		if(player == PLAYER1){
+			for(i=0; i<4; i++){
+				for(j=0; j<5; j++){
+					temp = conn.getMessage();
+					System.out.println(i + "-" + j + "-" + temp);
+					board[i][j].name = temp;
+					board[i][j].damage = Integer.parseInt(conn.getMessage());
+					board[i][j].life = Integer.parseInt(conn.getMessage());
+					board[i][j].cost = Integer.parseInt(conn.getMessage());
+					board[i][j].rowNum = Integer.parseInt(conn.getMessage());
+					board[i][j].colNum = Integer.parseInt(conn.getMessage());
+					board[i][j].owner = Integer.parseInt(conn.getMessage());
+				
+				}
+			}
+		}
+		else if(player == PLAYER2){
+			for(i=0; i<4; i++){
+				for(j=5; j<10; j++){
+					temp = conn.getMessage();
+					System.out.println(i + "-" + j + "-" + temp);
+					board[i][j].name = temp;
+					board[i][j].damage = Integer.parseInt(conn.getMessage());
+					board[i][j].life = Integer.parseInt(conn.getMessage());
+					board[i][j].cost = Integer.parseInt(conn.getMessage());
+					board[i][j].rowNum = Integer.parseInt(conn.getMessage());
+					board[i][j].colNum = Integer.parseInt(conn.getMessage());
+					board[i][j].owner = Integer.parseInt(conn.getMessage());
+				
+				}
+			}
+		}
+	}
 
+	private void updateBoards(List<Clients> clientsList, Character[][] board, int playerNum){
+		Iterator itr = clientsList.iterator();
+		int i=0, j=0;
+		while(itr.hasNext()){
+			Clients client = (Clients) itr.next();
+			if(playerNum == PLAYER1){
+				//copy board of player1
+				for(i=0; i<4; i++){
+					for(j=0; j<5; j++){
+						client.board[i][j] = board[i][j];
+					}
+				}
+				
+			}
+			else if(playerNum == PLAYER2){
+				//copy board of player2
+				for(i=0; i<4; i++){
+					for(j=5; j<10; j++){
+						client.board[i][j] = board[i][j];
+					}
+				}
+			}
+		}	
+	}
+	
+	private void copyBoard(List<Clients> clientsList, Character[][] board){
+		Iterator itr = clientsList.iterator();
+		int i=0, j=0;
+		Clients client = (Clients) itr.next();
+
+		for(i=0; i<4; i++){
+			for(j=0; j<10; j++){
+				client.board[i][j] = board[i][j];
+			}
+		}
+					
+	}
+	
+	private void sendToAll(){
+		Iterator itr = clientsList.iterator();
+		while(itr.hasNext()){
+			Clients c = (Clients) itr.next();
+			MyConnection current = c.conn;
+			current.sendMessage("START");
+			sendBoard(current,board);
+
+		}	
+	}
 }
