@@ -10,14 +10,14 @@ public class AttackThread extends Thread{
 	Character board[][];
 	int rowNum;
 	int colNum;
-	//MyConnection conn;
+	MyConnection conn;
 	
-	public AttackThread(Character board[][], int rowNum, int colNum){
-	//public AttackThread(Character board[][], int rowNum, int colNum, MyConnection conn){
+	//public AttackThread(Character board[][], int rowNum, int colNum){
+	public AttackThread(Character board[][], int rowNum, int colNum, MyConnection conn){
 		this.board = board;
 		this.rowNum = rowNum;
 		this.colNum = colNum;
-	//	this.conn = conn;
+		this.conn = conn;
 		start();
 	}
 	
@@ -39,6 +39,7 @@ public class AttackThread extends Thread{
 						 if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
 							damageOpponent(rowNum, oppColNum);
 							opponentCount++;
+							this.sendBoard(conn, board);
 						}
 					}
 					if(opponentCount == 0)
@@ -52,9 +53,11 @@ public class AttackThread extends Thread{
 					//INSERT CODE FOR FIND NEAREST OPPONENT HERE - should return the location of nearest opponent
 					oppColNum = findNearestOpponent(rowNum);
 					if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
-						damageOpponent(rowNum, oppColNum);		
+						damageOpponent(rowNum, oppColNum);	
+						this.sendBoard(conn, board);
 					} else{
 						//System.out.println("WALA NA AKONG KALABAN! O__O break naa! ");
+						this.sendBoard(conn, board);
 						break;
 					}
 				}
@@ -109,5 +112,21 @@ public class AttackThread extends Thread{
 			return false;
 		else
 			return true;
+	}
+	
+	public void sendBoard(MyConnection conn, Character board[][]){
+		int i=0, j=0;
+		for(i=0; i<4; i++){
+			for(j=0; j<10; j++){
+				conn.sendMessage("" + board[i][j].name + "");
+				conn.sendMessage("" + board[i][j].damage + "");
+				conn.sendMessage("" + board[i][j].life + "");
+				conn.sendMessage("" + board[i][j].cost + "");
+				conn.sendMessage("" + board[i][j].rowNum + "");
+				conn.sendMessage("" + board[i][j].colNum + "");
+				conn.sendMessage("" + board[i][j].owner + "");
+			}
+		}
+	
 	}
 }
