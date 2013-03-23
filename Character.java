@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.List;
 import java.net.*;
 
 public class Character{
@@ -26,9 +27,9 @@ public class Character{
 		//this.conn = conn;
 	}
 	
-	public void attack(Character board[][], MyConnection conn){
+	public void attack(Character board[][], MyConnection conn, List<Clients> clientsList){
 		//eto nalang ipa-pass since given the rownum and colnum, pwede natin maaccess yung character na nasa position na yun, thus pwede natin malaman yung damage niya
-		new AttackThread(board, this.rowNum, this.colNum, conn);
+		new AttackThread(board, this.rowNum, this.colNum, conn, clientsList);
 		
 	}
 
