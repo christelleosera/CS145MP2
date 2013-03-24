@@ -16,7 +16,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	int points = 300;
 	int player;
 	public Character board[][] = new Character[4][10];
-	private JPanel bg = new MyClientPanel(board, points);
+	public MyClientPanel bg = new MyClientPanel(board, points);
 	MyConnection conn;
 
 	private ImageIcon candy1_p1 = new ImageIcon("images/card_candycane_p1.png");
@@ -171,9 +171,15 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		button_go.addActionListener(go);
 		//button_go.setActionCommand("fight");
 		
-	//	sprinkle1_p1.setPlayer(player);
-	//	c.add(sprinkle1_p1);
-	//	sprinkle1_p1.setValues(250, 130, 600);
+	/*	sprinkle1_p1.setPlayer(player);
+		bg.add(sprinkle1_p1);
+		sprinkle1_p1.setValues(250, 130, 600);
+		sprinkle1_p1.setBounds(0, 0, 1105, 750);
+		sprinkle1_p1.setOpaque(false);
+	*/
+		
+		bg.setGame(true);
+		bg.repaint();
 	}
 	
 	public void receiveBoard(MyConnection conn, Character board[][]){
@@ -328,8 +334,8 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		//send Own Board
 		sendBoard(this.conn,this.board, player);
 	
-	//	Receive r = new Receive();
-	//	r.start();
+		Receive r = new Receive();
+		r.start();
 		
 	}
 	
