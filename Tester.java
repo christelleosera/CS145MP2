@@ -15,7 +15,7 @@ public class Tester extends Thread{
 		endX = 800;
 		SprinklePanel s = new SprinklePanel(x, y, endX, 1);
 	//	s.repaint();
-	//	test.setBackground(Color.YELLOW);
+		test.setBackground(Color.YELLOW);
 	//	test.setForeground(Color.cyan);
 		test.add(s);
 		test.setVisible(true);
@@ -29,6 +29,7 @@ public class Tester extends Thread{
 		s.setEndX(endX);
 		s.player = 0;
 		s.repaint();
+		
 		
 		
 	}

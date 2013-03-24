@@ -10,6 +10,7 @@ public class SprinklePanel extends JPanel implements ActionListener{
 	private static final int PLAYER2 = 1;
 	
 	private Image sprinkle_p1, sprinkle_p2;
+	private Image bg, background;
 	int x, y, endX, player;
 	Timer t = new Timer(7, this);
 	
@@ -19,6 +20,7 @@ public class SprinklePanel extends JPanel implements ActionListener{
 		this.endX = endX;
 		this.player = player;
 		this.setOpaque(false);
+		//this.setSize(90, 90);
 		getImages();
 	}
 	
@@ -37,6 +39,14 @@ public class SprinklePanel extends JPanel implements ActionListener{
 	            if(url == null) throw new IOException("Couldn't load sprinkle_p2.png");
 	            sprinkle_p2 = new ImageIcon(url).getImage();
 	            
+	            url = getClass().getResource("images/transparent_bg.png");
+	            if(url == null) throw new IOException("Couldn't load transparent_bg.png");
+	            bg = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/bg.png");
+	            if(url == null) throw new IOException("Couldn't load bg.png");
+	            background = new ImageIcon(url).getImage();
+	            
 	        } catch(IOException e) {
 	            System.err.println(e);
 	        }
@@ -44,6 +54,9 @@ public class SprinklePanel extends JPanel implements ActionListener{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);	
+	//	g.drawImage(bg, 0, 0, null);
+		g.drawImage(background, 0, 0, null);
+	//	g.setColor(getBackground());
 		
 		if(player == PLAYER1)
 			g.drawImage(sprinkle_p1, x, y, null);
