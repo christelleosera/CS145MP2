@@ -35,14 +35,12 @@ public class AttackThread extends Thread{
 		int opponentCount=0;
 		Boolean winner = false;
 		while(!winner){
-			
-			
 			synchronized(board[rowNum][colNum]){
 				if(!iStillExists(board)) break;
 				
 				if(board[rowNum][colNum].name.equals("donut")){
 					//damage on all rows
-					for(i=0; i<4; i++){
+					for(i=0; i<4; i++){s
 						 oppColNum = findNearestOpponent(i);
 						 if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
 							damageOpponent(rowNum, oppColNum);
@@ -79,7 +77,7 @@ public class AttackThread extends Thread{
 			
 		}
 		sendToAll(board);
-		System.out.println("ako si " + board[rowNum][colNum].name + " at dedz na ko.");
+		System.out.println("ako si " + board[rowNum][oppColNum].name + " at dedz na ko.");
 		//code to display board
 		//code to send board to client
 
@@ -109,8 +107,8 @@ public class AttackThread extends Thread{
 	
 	private void damageOpponent(int oppRowNum, int oppColNum){
 		synchronized(board[rowNum][colNum]){
-			if(iStillExists(board)){
-				System.out.println("Location ng kalaban ko: " + oppRowNum + " , " + oppColNum);
+			if(iStillExists(board) && board[rowNum][colNum].owner != board[oppRowNum][oppColNum].owner){
+				System.out.println("Location ng kalaban ko: " + oppRowNum + " , " + oppColNum + " " + board[rowNum][colNum].owner);
 				//change the values of oppRowNum & oppColNum
 				board[oppRowNum][oppColNum].life = board[oppRowNum][oppColNum].life - board[rowNum][colNum].damage;
 				//^ life of opponent = old life - damage of this character;
