@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 public class AttackThread extends Thread{
 	/*players*/
 	private static final int PLAYER1 = 0;
+	private static final int PLAYER2 = 1;
 	
 	Character board[][];
 	int rowNum;
@@ -48,6 +49,7 @@ public class AttackThread extends Thread{
 							opponentCount++;
 							//this.sendBoard(conn, board);
 							sendToAll(board);
+							
 						}
 					}
 					if(opponentCount == 0)
@@ -159,15 +161,29 @@ public class AttackThread extends Thread{
 		}	
 	}
 	
+	private void sendWinner(int winner){
+		
+		Iterator itr = clientsList.iterator();
+		while(itr.hasNext()){
+			Clients c = (Clients) itr.next();
+			MyConnection current = c.conn;
+			synchronized(current){
+				current.sendMessage("ENDGAME" + winner);
+			}
+		}	
+	}
+
 	private boolean checkWinner(Character board[][]){
 		int i=0,j=0;
 		//for player1
 		if(board[0][9].owner == -1 || board[1][9].owner == -1 || board[2][9].owner == -1 || board[3][9].owner == -1 ){
-			JOptionPane.showMessageDialog(null, "PLAYER1 wins!");
+			sendWinner(PLAYER1);
+			//JOptionPane.showMessageDialog(null, "PLAYER1 wins!");
 			return true;
 		}
 		else if(board[0][0].owner == -1 || board[1][0].owner == -1 || board[2][0].owner == -1 || board[3][0].owner == -1 ){
-			JOptionPane.showMessageDialog(null, "PLAYER2 wins!");
+			//JOptionPane.showMessageDialog(null, "PLAYER2 wins!");
+			sendWinner(PLAYER2);
 			return true;
 		}
 		return false;
