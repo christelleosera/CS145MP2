@@ -33,6 +33,11 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	private ImageIcon candy5_p2 = new ImageIcon("images/card_gummybear_p2.png");
 	private ImageIcon candy6_p2 = new ImageIcon("images/card_jellybean_p2.png");
 	
+	private ImageIcon sprinkle_p1 = new ImageIcon("images/sprinkle_p1.png");
+	private ImageIcon sprinkle_p2 = new ImageIcon("images/sprinkle_p2.png");
+	
+	private SprinklePanel sprinkle1_p1 = new SprinklePanel();
+	
 	private ImageIcon go_btn = new ImageIcon("images/go_btn.png");
 	
 	/*player 1 items*/
@@ -101,9 +106,6 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		button5_p1.setBounds(685, 520, 120, 150);
 		button6_p1.setBounds(815, 520, 120, 150);
 		
-		
-
-  
 		/*PLAYER 2*/
 		player2.setBounds(550, 100, 500, 400);
 		player2.setOpaque(false);
@@ -118,11 +120,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		
 		button_go.setBounds(465, 15, 180, 70);
 		c.add(button_go);
-		
-		
-		
-		
-		
+			
 		if(this.player == PLAYER1){
 			c.add(button1_p1);
 			c.add(button2_p1);
@@ -143,8 +141,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	
 		c.add(bg);
 		bg.repaint();
-	//	Receive r = new Receive();
-	//	r.start();
+
 		button1_p1.addActionListener(this);
 		button1_p1.setActionCommand("candycane");
 		button2_p1.addActionListener(this);
@@ -173,6 +170,10 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		Go go = new Go();
 		button_go.addActionListener(go);
 		//button_go.setActionCommand("fight");
+		
+	//	sprinkle1_p1.setPlayer(player);
+	//	c.add(sprinkle1_p1);
+	//	sprinkle1_p1.setValues(250, 130, 600);
 	}
 	
 	public void receiveBoard(MyConnection conn, Character board[][]){
@@ -327,14 +328,15 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		//send Own Board
 		sendBoard(this.conn,this.board, player);
 	
-		Receive r = new Receive();
-		r.start();
+	//	Receive r = new Receive();
+	//	r.start();
 		
 	}
 	
 	
 	private class Receive extends Thread {
 		String temp="";
+		int winner=-1;
 		public void run(){
 			System.out.println("Err. Irreceive ko na yung board ha? ");
 			
@@ -344,8 +346,14 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 					//get a copy of the board.
 					receiveBoard(conn, board);
 					System.out.println("updateBoard.");
+					bg.repaint();
+				} else if(temp.contains("ENDGAME")){
+					winner = Integer.parseInt(temp.substring(7));
+					winner++;
+					JOptionPane.showMessageDialog(null, winner + " wins! :D");
+					dispose(); //temp muna to, pero gagawa pa ng new window
 				}
-				bg.repaint();
+				
 			}
 		}
 	}
