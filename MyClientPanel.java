@@ -3,10 +3,12 @@ import javax.swing.*;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 
-public class MyClientPanel extends JPanel{
+public class MyClientPanel extends JPanel implements ActionListener{
 	
 	/*players*/
 	private static final int PLAYER1 = 0;
@@ -18,7 +20,10 @@ public class MyClientPanel extends JPanel{
 	Character board[][];
 	int points;
 	
-	
+	int x=150, y=150, endX=500, player;
+	private Image sprinkle_p1, sprinkle_p2;
+	private Boolean gameStarted = false;
+	Timer t = new Timer(7, this);
 	 
 	private Image background, board_p1, board_p2;
 	public MyClientPanel(Character board[][], int points){
@@ -100,6 +105,15 @@ public class MyClientPanel extends JPanel{
 	            url = getClass().getResource("images/cupcake_p2.png");
 	            if(url == null) throw new IOException("Couldn't load cupcake_p2.png");
 	            cupcake_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/sprinkle_p1.png");
+	            if(url == null) throw new IOException("Couldn't load sprinkle_p1.png");
+	            sprinkle_p1 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/sprinkle_p2.png");
+	            if(url == null) throw new IOException("Couldn't load sprinkle_p2.png");
+	            sprinkle_p2 = new ImageIcon(url).getImage();
+	            
 	        } catch(IOException e) {
 	            System.err.println(e);
 	        }
@@ -155,8 +169,28 @@ public class MyClientPanel extends JPanel{
 			}
 		}
 		
+		if(gameStarted &&  x<endX){
+			if(player == PLAYER1)
+				g.drawImage(sprinkle_p1, x, y, null);
+			else if(player == PLAYER2)
+				g.drawImage(sprinkle_p2, x, y, null);
+			
+			t.start(); 
+		}
+	
+		
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		x += 2;
+		//if(x < endX)
+			repaint();
 		
 	}
 
+	public void setGame(Boolean response){
+		this.gameStarted = response;
+	}
+	
 	
 }
