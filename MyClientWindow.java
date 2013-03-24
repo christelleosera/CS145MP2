@@ -18,6 +18,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	public Character board[][] = new Character[4][10];
 	public MyClientPanel bg = new MyClientPanel(board, points);
 	MyConnection conn;
+	Boolean winChecker = false;
 
 	private ImageIcon candy1_p1 = new ImageIcon("images/card_candycane_p1.png");
 	private ImageIcon candy2_p1 = new ImageIcon("images/card_chocnut_p1.png");
@@ -39,6 +40,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	private SprinklePanel sprinkle1_p1 = new SprinklePanel();
 	
 	private ImageIcon go_btn = new ImageIcon("images/go_btn.png");
+	private ImageIcon loading = new ImageIcon("images/m_and_m.gif");
 	
 	/*player 1 items*/
 	JPanel player1 = new JPanel();
@@ -64,7 +66,8 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 	
 	JLabel points_lbl = new JLabel("<html><center><font size=5>Points left:<br>" + points + "</font></center></html>");
 
-	
+	JLabel t = new JLabel();
+			
 	Container c;
 	String charName;
 	
@@ -178,7 +181,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 		sprinkle1_p1.setOpaque(false);
 	*/
 		
-		bg.setGame(true);
+	//	bg.setGame(true);
 		bg.repaint();
 	}
 	
@@ -351,13 +354,16 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 				if(temp.contains("UPDATE")){
 					//get a copy of the board.
 					receiveBoard(conn, board);
+					bg.setGame(true);
 					System.out.println("updateBoard.");
 					bg.repaint();
-				} else if(temp.contains("ENDGAME")){
+				} else if(temp.contains("ENDGAME") && !winChecker){
 					winner = Integer.parseInt(temp.substring(7));
 					winner++;
 					JOptionPane.showMessageDialog(null, winner + " wins! :D");
+					winChecker = true;
 					dispose(); //temp muna to, pero gagawa pa ng new window
+					
 				}
 				
 			}

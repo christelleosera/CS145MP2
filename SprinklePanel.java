@@ -39,9 +39,9 @@ public class SprinklePanel extends JPanel implements ActionListener{
 	            if(url == null) throw new IOException("Couldn't load sprinkle_p2.png");
 	            sprinkle_p2 = new ImageIcon(url).getImage();
 	            
-	            url = getClass().getResource("images/transparent_bg.png");
-	            if(url == null) throw new IOException("Couldn't load transparent_bg.png");
-	            bg = new ImageIcon(url).getImage();
+	          //  url = getClass().getResource("images/transparent_bg.png");
+	          //  if(url == null) throw new IOException("Couldn't load transparent_bg.png");
+	          //  bg = new ImageIcon(url).getImage();
 	            
 	            url = getClass().getResource("images/bg.png");
 	            if(url == null) throw new IOException("Couldn't load bg.png");

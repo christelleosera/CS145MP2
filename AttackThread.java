@@ -43,7 +43,12 @@ public class AttackThread extends Thread{
 					for(i=0; i<4; i++){s
 						 oppColNum = findNearestOpponent(i);
 						 if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
-							damageOpponent(rowNum, oppColNum);
+							try{
+								Thread.sleep(1000);
+							} catch(Exception e){
+								
+							}
+							 damageOpponent(rowNum, oppColNum);
 							opponentCount++;
 							//this.sendBoard(conn, board);
 							sendToAll(board);
@@ -61,6 +66,11 @@ public class AttackThread extends Thread{
 					//INSERT CODE FOR FIND NEAREST OPPONENT HERE - should return the location of nearest opponent
 					oppColNum = findNearestOpponent(rowNum);
 					if(oppColNum != -1 && iStillExists(board)){ // if an opponent exists
+						try{
+							Thread.sleep(1000);
+						} catch(Exception e){
+							
+						}
 						damageOpponent(rowNum, oppColNum);	
 						//this.sendBoard(conn, board);
 						sendToAll(board);
@@ -142,7 +152,6 @@ public class AttackThread extends Thread{
 				conn.sendMessage("" + board[i][j].owner + "");
 			}
 		}
-		
 	
 	}
 	
