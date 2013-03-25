@@ -29,7 +29,7 @@ public class Character{
 	
 	public void attack(Character board[][], MyConnection conn, List<Clients> clientsList){
 		//eto nalang ipa-pass since given the rownum and colnum, pwede natin maaccess yung character na nasa position na yun, thus pwede natin malaman yung damage niya
-		AttackThread at = new AttackThread(board, this.rowNum, this.colNum, conn, clientsList);
+		new AttackThread(board, this.rowNum, this.colNum, conn, clientsList);
 		
 	}
 
