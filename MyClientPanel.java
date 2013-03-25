@@ -19,6 +19,11 @@ public class MyClientPanel extends JPanel implements ActionListener{
 	private Image mm1, mm2, mm3, mm4, mm5, mm6, mm7, mm8, mm9;
 	private Image choc1, choc2, choc3, choc4, choc5, choc6, choc7, choc8, choc9;
 	private Image spr1, spr2, spr3, spr4, spr5, spr6, spr7, spr8, spr9;
+	
+	private Image mm1_p2, mm2_p2, mm3_p2, mm4_p2, mm5_p2, mm6_p2, mm7_p2, mm8_p2, mm9_p2;
+	private Image choc1_p2, choc2_p2, choc3_p2, choc4_p2, choc5_p2, choc6_p2, choc7_p2, choc8_p2, choc9_p2;
+	private Image spr1_p2, spr2_p2, spr3_p2, spr4_p2, spr5_p2, spr6_p2, spr7_p2, spr8_p2, spr9_p2;
+	
 	Character board[][];
 	int points;
 	Coordinates coord[] = new Coordinates[32];
@@ -233,6 +238,118 @@ public class MyClientPanel extends JPanel implements ActionListener{
 	            if(url == null) throw new IOException("Couldn't load 900_sprinkle.gif");
 	            spr9 = new ImageIcon(url).getImage();
 	            
+	            /*m&ms - player2*/
+	            url = getClass().getResource("images/100_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 100_m&m_2.gif");
+	            mm1_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/200_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 200_m&m_2.gif");
+	            mm2_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/300_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 300_m&m_2.gif");
+	            mm3_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/400_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 400_m&m_2.gif");
+	            mm4_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/500_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 500_m&m_2.gif");
+	            mm5_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/600_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 600_m&m_2.gif");
+	            mm6_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/700_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 700_m&m_2.gif");
+	            mm7_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/800_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 800_m&m_2.gif");
+	            mm8_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/900_m&m_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 900_m&m_2.gif");
+	            mm9_p2 = new ImageIcon(url).getImage();
+	            
+	            
+	            /*chocnut - player2*/
+	            url = getClass().getResource("images/100_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 100_chocnut_2.gif");
+	            choc1_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/200_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 200_chocnut_2.gif");
+	            choc2_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/300_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 300_chocnut_2.gif");
+	            choc3_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/400_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 400_chocnut_2.gif");
+	            choc4_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/500_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 500_chocnut_2.gif");
+	            choc5_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/600_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 600_chocnut_2.gif");
+	            choc6_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/700_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 700_chocnut_2.gif");
+	            choc7_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/800_chocnut.gif");
+	            if(url == null) throw new IOException("Couldn't load 800_chocnut.gif");
+	            choc8_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/900_chocnut_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 900_chocnut_2.gif");
+	            choc9_p2 = new ImageIcon(url).getImage();
+	            
+	            /*sprinkle - player2*/
+	            url = getClass().getResource("images/100_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 100_sprinkle_2.gif");
+	            spr1_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/200_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 200_sprinkle_2.gif");
+	            spr2_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/300_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 300_sprinkle_2.gif");
+	            spr3_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/400_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 400_sprinkle_2.gif");
+	            spr4_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/500_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 500_sprinkle_2.gif");
+	            spr5_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/600_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 600_sprinkle_2.gif");
+	            spr6_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/700_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 700_sprinkle_2.gif");
+	            spr7_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/800_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 800_sprinkle_2.gif");
+	            spr8_p2 = new ImageIcon(url).getImage();
+	            
+	            url = getClass().getResource("images/900_sprinkle_2.gif");
+	            if(url == null) throw new IOException("Couldn't load 900_sprinkle_2.gif");
+	            spr9_p2 = new ImageIcon(url).getImage();
+	            
 	        } catch(IOException e) {
 	            System.err.println(e);
 	        }
@@ -296,21 +413,6 @@ public class MyClientPanel extends JPanel implements ActionListener{
 						g.drawImage(jellybean_p2, 50+(j*100), 100+(i*100), null);
 				}
 				
-			/*	if(gameStarted){
-					if(board[i][j].isOccupied()){
-						System.out.println( board[i][j].rowNum);
-						coord[count].x = j;
-						coord[count].y = i;
-						coord[count].endX = findNearestOpponent(i,j);
-						coord[count].owner = board[i][j].owner;
-						count++;
-					
-					//	g.drawImage(sprinkle_p1, 50+(coord[i].x*100), 100+(coord[i].y*100), null);
-						//g.drawImage(sprinkle_p1, 50+(j*100), 100+(i*100), null);
-					}
-				}
-				*/
-				
 				if(gameStarted && !name.equals("cupcake")){
 				
 					 if(owner == PLAYER1){
@@ -362,27 +464,101 @@ public class MyClientPanel extends JPanel implements ActionListener{
 								 temp = findNearestOpponent(k,j);
 								 if(owner == PLAYER1)
 									 distance = j - temp;
-								 else if(owner == PLAYER2)
-									 distance = temp - j;
+								// else if(owner == PLAYER2)
+									// distance = temp - j;
 								 
 								 if(distance == 1)
-									 g2d.drawImage(choc1, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr1, 100+(j*100), 100+(k*100), this);
 								 else if(distance == 2)
-									 g2d.drawImage(choc2, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr2, 100+(j*100), 100+(k*100), this);
 								 else if(distance == 3)
-									 g2d.drawImage(choc3, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr3, 100+(j*100), 100+(k*100), this);
 								 else if(distance == 4)
-									 g2d.drawImage(choc4, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr4, 50+(j*100), 100+(k*100), this);
 								 else if(distance == 5)
-									 g2d.drawImage(choc5, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr5, 50+(j*100), 100+(k*100), this);
 								 else if(distance == 6)
-									 g2d.drawImage(choc6, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr6, 50+(j*100), 100+(k*100), this);
 								 else if(distance == 7)
-									 g2d.drawImage(choc7, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr7, 50+(j*100), 100+(k*100), this);
 								 else if(distance == 8)
-									 g2d.drawImage(choc8, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr8, 50+(j*100), 100+(k*100), this);
 								 else if(distance == 9)
-									 g2d.drawImage(choc9, 50+(j*100), 100+(k*100), this);
+									 g2d.drawImage(spr9, 50+(j*100), 100+(k*100), this);
+							 }
+							 
+						 }  
+						 
+					 } else if(owner == PLAYER2){
+						 System.out.println("I am player " + board[i][j].name + "with distance " + distance);
+						 
+						 if(name.equals("gingerbread")){
+							 if(distance == 1)
+								 g2d.drawImage(mm1_p2, 50+((j-1)*100), 100+(i*100), this);
+							 else if(distance == 2)
+								 g2d.drawImage(mm2_p2, 50+((j-2)*100), 100+(i*100), this);
+							 else if(distance == 3)
+								 g2d.drawImage(mm3_p2, 50+((j-3)*100), 100+(i*100), this);
+							 else if(distance == 4)
+								 g2d.drawImage(mm4_p2, 50+((j-4)*100), 100+(i*100), this);
+							 else if(distance == 5)
+								 g2d.drawImage(mm5_p2, 50+((j-5)*100), 100+(i*100), this);
+							 else if(distance == 6)
+								 g2d.drawImage(mm6_p2, 50+((j-6)*100), 100+(i*100), this);
+							 else if(distance == 7)
+								 g2d.drawImage(mm7_p2, 50+((j-7)*100), 100+(i*100), this);
+							 else if(distance == 8)
+								 g2d.drawImage(mm8_p2, 50+((j-8)*100), 100+(i*100), this);
+							 else if(distance == 9)
+								 g2d.drawImage(mm9_p2, 50+((j-9)*100), 100+(i*100), this);
+							 
+						 } else if(name.equals("chocnut")){
+							 
+							 if(distance == 1)
+								 g2d.drawImage(choc1_p2, 50+((j-1)*100), 100+(i*100), this);
+							 else if(distance == 2)
+								 g2d.drawImage(choc2_p2, 50+((j-2)*100), 100+(i*100), this);
+							 else if(distance == 3)
+								 g2d.drawImage(choc3_p2, 50+((j-3)*100), 100+(i*100), this);
+							 else if(distance == 4)
+								 g2d.drawImage(choc4_p2, 50+((j-4)*100), 100+(i*100), this);
+							 else if(distance == 5)
+								 g2d.drawImage(choc5_p2, 50+((j-5)*100), 100+(i*100), this);
+							 else if(distance == 6)
+								 g2d.drawImage(choc6_p2, 50+((j-6)*100), 100+(i*100), this);
+							 else if(distance == 7)
+								 g2d.drawImage(choc7_p2, 50+((j-7)*100), 100+(i*100), this);
+							 else if(distance == 8)
+								 g2d.drawImage(choc8_p2, 50+((j-8)*100), 100+(i*100), this);
+							 else if(distance == 9)
+								 g2d.drawImage(choc9_p2, 50+((j-9)*100), 100+(i*100), this);
+							 
+						 } else if(name.equals("donut")){
+							 for(k=0; k<4; k++){
+								 temp = findNearestOpponent(k,j);
+								 if(owner == PLAYER1)
+									 distance = j - temp;
+								// else if(owner == PLAYER2)
+									// distance = temp - j;
+								 
+								 if(distance == 1)
+									 g2d.drawImage(spr1_p2, 100+((j-1)*100), 100+(k*100), this);
+								 else if(distance == 2)
+									 g2d.drawImage(spr2_p2, 100+((j-2)*100), 100+(k*100), this);
+								 else if(distance == 3)
+									 g2d.drawImage(spr3_p2, 100+((j-3)*100), 100+(k*100), this);
+								 else if(distance == 4)
+									 g2d.drawImage(spr4_p2, 50+((j-4)*100), 100+(k*100), this);
+								 else if(distance == 5)
+									 g2d.drawImage(spr5_p2, 50+((j-5)*100), 100+(k*100), this);
+								 else if(distance == 6)
+									 g2d.drawImage(spr6_p2, 50+((j-6)*100), 100+(k*100), this);
+								 else if(distance == 7)
+									 g2d.drawImage(spr7_p2, 50+((j-7)*100), 100+(k*100), this);
+								 else if(distance == 8)
+									 g2d.drawImage(spr8_p2, 50+((j-8)*100), 100+(k*100), this);
+								 else if(distance == 9)
+									 g2d.drawImage(spr9_p2, 50+((j-9)*100), 100+(k*100), this);
 							 }
 							 
 						 } 
