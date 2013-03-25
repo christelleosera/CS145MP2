@@ -363,6 +363,15 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 					JOptionPane.showMessageDialog(null, winner + " wins! :D");
 					winChecker = true;
 					dispose(); //temp muna to, pero gagawa pa ng new window
+					if(winner == player){
+						WinnerWindow w = new WinnerWindow();
+						w.setVisible(true);
+					}
+					else {
+						LoserWindow w = new LoserWindow();
+						w.setVisible(true);
+					}
+					
 					
 				}
 				
