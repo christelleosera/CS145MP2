@@ -48,8 +48,8 @@ public class MyClientPanel extends JPanel implements ActionListener{
 	private final void getImages() { 
 		 URL url;
 	        try {
-	            url = getClass().getResource("images/bg.png");
-	            if(url == null) throw new IOException("Couldn't load bg.png");
+	            url = getClass().getResource("images/bg.jpg");
+	            if(url == null) throw new IOException("Couldn't load bg.jpg");
 	            background = new ImageIcon(url).getImage();
 	            
 	            url = getClass().getResource("images/board_p1.png");
@@ -306,7 +306,7 @@ public class MyClientPanel extends JPanel implements ActionListener{
 	            choc7_p2 = new ImageIcon(url).getImage();
 	            
 	            url = getClass().getResource("images/800_chocnut.gif");
-	            if(url == null) throw new IOException("Couldn't load 800_chocnut.gif");
+	            if(url == null) throw new IOException("Couldn't load 800_chocnut_2.gif");
 	            choc8_p2 = new ImageIcon(url).getImage();
 	            
 	            url = getClass().getResource("images/900_chocnut_2.gif");
