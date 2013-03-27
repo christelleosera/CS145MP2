@@ -359,8 +359,7 @@ public class MyClientWindow extends JFrame implements MouseListener, ActionListe
 					bg.repaint();
 				} else if(temp.contains("ENDGAME") && !winChecker){
 					winner = Integer.parseInt(temp.substring(7));
-					winner++;
-					JOptionPane.showMessageDialog(null, winner + " wins! :D");
+					//JOptionPane.showMessageDialog(null, winner + " wins! :D");
 					winChecker = true;
 					dispose(); //temp muna to, pero gagawa pa ng new window
 					if(winner == player){
