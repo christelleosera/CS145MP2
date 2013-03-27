@@ -82,12 +82,85 @@ public class ServerListener extends Thread{
 	private void fightStart(Character board[][], MyConnection conn, List<Clients> clientsList){
 		System.out.println("fightStart!");
 		int i=0, j=0;
-		for(i=0; i<4; i++){
+		/*for(i=0; i<4; i++){
 			for(j=1; j<9; j++){
 				if(board[i][j].isOccupied())
 					board[i][j].attack(board, conn, clientsList);
 			}
-		}
+		}*/
+		
+		//row1
+		if(board[0][1].isOccupied())
+			board[0][1].attack(board, conn, clientsList);
+		if(board[0][8].isOccupied())
+			board[0][8].attack(board, conn, clientsList);
+		if(board[0][2].isOccupied())
+			board[0][2].attack(board, conn, clientsList);
+		if(board[0][7].isOccupied())
+			board[0][7].attack(board, conn, clientsList);
+		if(board[0][3].isOccupied())
+			board[0][3].attack(board, conn, clientsList);
+		if(board[0][6].isOccupied())
+			board[0][6].attack(board, conn, clientsList);
+		if(board[0][4].isOccupied())
+			board[0][4].attack(board, conn, clientsList);
+		if(board[0][5].isOccupied())
+			board[0][5].attack(board, conn, clientsList);
+		
+		//row2
+		if(board[1][1].isOccupied())
+			board[1][1].attack(board, conn, clientsList);
+		if(board[1][8].isOccupied())
+			board[1][8].attack(board, conn, clientsList);
+		if(board[1][2].isOccupied())
+			board[1][2].attack(board, conn, clientsList);
+		if(board[1][7].isOccupied())
+			board[1][7].attack(board, conn, clientsList);
+		if(board[1][3].isOccupied())
+			board[1][3].attack(board, conn, clientsList);
+		if(board[1][6].isOccupied())
+			board[1][6].attack(board, conn, clientsList);
+		if(board[1][4].isOccupied())
+			board[1][4].attack(board, conn, clientsList);
+		if(board[1][5].isOccupied())
+			board[1][5].attack(board, conn, clientsList);
+		
+		//row3
+		if(board[2][1].isOccupied())
+			board[2][1].attack(board, conn, clientsList);
+		if(board[2][8].isOccupied())
+			board[2][8].attack(board, conn, clientsList);
+		if(board[2][2].isOccupied())
+			board[2][2].attack(board, conn, clientsList);
+		if(board[2][7].isOccupied())
+			board[2][7].attack(board, conn, clientsList);
+		if(board[2][3].isOccupied())
+			board[2][3].attack(board, conn, clientsList);
+		if(board[2][6].isOccupied())
+			board[2][6].attack(board, conn, clientsList);
+		if(board[2][4].isOccupied())
+			board[2][4].attack(board, conn, clientsList);
+		if(board[2][5].isOccupied())
+			board[2][5].attack(board, conn, clientsList);
+		
+		//row3
+		if(board[3][1].isOccupied())
+			board[3][1].attack(board, conn, clientsList);
+		if(board[3][8].isOccupied())
+			board[3][8].attack(board, conn, clientsList);
+		if(board[3][2].isOccupied())
+			board[3][2].attack(board, conn, clientsList);
+		if(board[3][7].isOccupied())
+			board[3][7].attack(board, conn, clientsList);
+		if(board[3][3].isOccupied())
+			board[3][3].attack(board, conn, clientsList);
+		if(board[3][6].isOccupied())
+			board[3][6].attack(board, conn, clientsList);
+		if(board[3][4].isOccupied())
+			board[3][4].attack(board, conn, clientsList);
+		if(board[3][5].isOccupied())
+			board[3][5].attack(board, conn, clientsList);
+		
 	}
 
 	public void sendBoard(MyConnection conn, Character board[][]){
