@@ -50,7 +50,8 @@ public class AttackThread extends Thread{
 							} catch(Exception e){
 								
 							}
-							 damageOpponent(rowNum, oppColNum);
+							 //damageOpponent(rowNum, oppColNum);
+							damageOpponent(i, oppColNum);
 							opponentCount++;
 							//this.sendBoard(conn, board);
 							sendToAll(board);
